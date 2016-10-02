@@ -1,24 +1,20 @@
-﻿using SuitSupply.Core.Messaging;
+﻿#region Namespace
+using SuitSupply.Core.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
+#endregion
 namespace SuitSupply.Core.Azure
 {
     public class TopicSender : IMessageSender
     {
-        private readonly TokenProvider tokenProvider;
-        private readonly Uri serviceUri;
-        private readonly string topic;
-        private readonly RetryPolicy retryPolicy;
-        private readonly TopicClient topicClient;
+        private readonly TokenProvider _tokenProvider;
+        private readonly Uri _serviceUri;
+        private readonly string _topic;
+        private readonly RetryPolicy _retryPolicy;
+        private readonly TopicClient _topicClient;
 
 
 
@@ -33,22 +29,22 @@ namespace SuitSupply.Core.Azure
             string serviceNamespace,
             string servicePath)
         {
-            this.topic = topic;
+            this._topic = topic;
 
-            this.tokenProvider = TokenProvider.
+            this._tokenProvider = TokenProvider.
                 CreateSharedAccessSignatureTokenProvider(tokenIssuer, tokenAccessKey);
-            this.serviceUri = ServiceBusEnvironment.
+            this._serviceUri = ServiceBusEnvironment.
                 CreateServiceUri(serviceUriScheme,
                     serviceNamespace, servicePath);
 
-            var factory = MessagingFactory.Create(this.serviceUri, this.tokenProvider);
-            this.topicClient = factory.CreateTopicClient(this.topic);
+            var factory = MessagingFactory.Create(this._serviceUri, this._tokenProvider);
+            this._topicClient = factory.CreateTopicClient(this._topic);
         }
 
         public void Send(ICommand command)
         {
                 var payload = BuildMessage(command);
-                this.topicClient.Send(payload);
+                this._topicClient.Send(payload);
         }
 
         private BrokeredMessage BuildMessage(ICommand command)

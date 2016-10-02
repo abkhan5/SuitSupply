@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SuitSupply.Core.Extensions;
 using SuitSupply.DataObject;
 
 namespace SuitSupply.Client
@@ -14,8 +15,9 @@ namespace SuitSupply.Client
             ProductDto product= new ProductDto();
             product.ProductName = "Cola";
             product.CreatedOn=DateTime.Now;
-            product.ProductImages= new List<byte[]>();
-
+            var productImages= new List<byte[]>();
+            productImages.Add(ImageExtensions.LoadImageToByte(null, "car2.jpg"));
+            product.ProductImages = productImages;
             return product;
         }
     }

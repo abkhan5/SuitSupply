@@ -41,7 +41,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        [ActionName("AddProduct")]
+        //[ActionName("AddProduct")]
         public void Post(ProductDto productDto)
         {
             var product = productDto.ProductDtoToPoco();

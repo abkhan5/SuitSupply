@@ -13,13 +13,49 @@ namespace SuitSupply.Client
     {
         static void Main(string[] args)
         {
-            //var runMoreCommand = true;
-            //while (runMoreCommand)
-            //{
-                
-            //}
+            var runMoreCommand = true;
+            while (runMoreCommand)
+            {
+                var option= PrintOptions();
+                if (option==0)
+                {
+                    break;
+                }
 
-            new SuitSupplyWebClient();
+                try
+                {
+                    var client = new SuitSupplyWebClient();
+                    Task productTask = new Task(() => { });
+                    switch (option)
+                    {
+                        case 1:
+                            productTask = client.GetProductsAsync();
+                            break;
+                        case 2:
+                            productTask = client.PostProduct();
+                            break;
+                    }
+                    productTask.Wait();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(" Failure : "+ex);
+                }  
+            }
+        }
+
+      static int PrintOptions()
+        {
+            Console.WriteLine("1. All Products");
+
+            Console.WriteLine("2. Update Product");
+            var resp = Console.ReadLine();
+            if (string.IsNullOrEmpty(resp))
+            {
+                return 0;
+            }
+            var option = int.Parse(resp);
+            return option;
         }
       
     }

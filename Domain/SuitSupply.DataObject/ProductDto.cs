@@ -15,7 +15,10 @@ namespace SuitSupply.DataObject
 
         public IEnumerable<byte[]> ProductImages { get; set; }
 
-
+        public override string ToString()
+        {
+            return "Product Name = "+ProductName;
+        }
     }
 
 }

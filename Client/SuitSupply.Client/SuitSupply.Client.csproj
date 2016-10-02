@@ -61,10 +61,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\SuitSupply.Core\SuitSupply.Core.csproj">
+      <Project>{e8fe7e2c-24b0-4be1-822a-ee4a5af3e7a5}</Project>
+      <Name>SuitSupply.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\SuitSupply.DataObject\SuitSupply.DataObject.csproj">
       <Project>{db19d03c-0058-42c5-9aef-f606d24265a2}</Project>
       <Name>SuitSupply.DataObject</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="car2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Echo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Kindle.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

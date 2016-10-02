@@ -13,17 +13,25 @@ namespace SuitSupply.Client
     {
         public SuitSupplyWebClient()
         {
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri(ServicePath);
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+         }
+
+        private readonly HttpClient _client ;
+        private const string ServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
+
+
+        public async Task PostProduct()
+        {
             var product = ProductSampleData.GetSampleDto();
-            CreateProductAsync(product);
+            await CreateProductAsync(product);
         }
 
-         HttpClient client = new HttpClient();
-        public const string ServicePath = "http://localhost/SuitSupply.Server.ServiceHost/api/product/";
-      
-
-         async Task<Uri> CreateProductAsync(ProductDto product)
+        async Task<Uri> CreateProductAsync(ProductDto product)
          {
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/products", product);
+            HttpResponseMessage response = await _client.PostAsJsonAsync("api/product", product);
             response.EnsureSuccessStatusCode();
 
 
@@ -31,15 +39,23 @@ namespace SuitSupply.Client
             return response.Headers.Location;
         }
 
-        async Task<ProductDto> GetProductAsync(string path)
+      public async Task<IEnumerable<ProductDto>> GetProductsAsync()
         {
-            ProductDto product = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
+            IEnumerable<ProductDto> products = new List<ProductDto>();
+            using (_client)
             {
-                product = await response.Content.ReadAsAsync<ProductDto>();
+                HttpResponseMessage res = await _client.GetAsync("api/product");
+                res.EnsureSuccessStatusCode();
+                if (res.IsSuccessStatusCode)
+                {
+                    products = await res.Content.ReadAsAsync<IEnumerable<ProductDto>>();
+                    foreach (var product in products)
+                    {
+                        Console.WriteLine(product);
+                    }
+                }
             }
-            return product;
+            return products;
         }
         //async Task RunAsync()
         //{
