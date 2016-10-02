@@ -5,6 +5,7 @@ namespace SuitSupply.Core.Messaging
 {
     public interface ICommandHandler
     {
+        void Handle(ICommand command);
     }
 
     public interface ICommandHandler<T> : ICommandHandler

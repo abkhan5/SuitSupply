@@ -45,6 +45,7 @@
     <Compile Include="Messaging\ICommand.cs" />
     <Compile Include="Messaging\ICommandBus.cs" />
     <Compile Include="Messaging\ICommandHandler.cs" />
+    <Compile Include="Messaging\ICommandHandlerRegistery.cs" />
     <Compile Include="Messaging\IMessageSender.cs" />
     <Compile Include="Messaging\IMessageReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

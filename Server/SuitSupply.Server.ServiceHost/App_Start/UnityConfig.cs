@@ -19,14 +19,12 @@ namespace SuitSupply.Server.ServiceHost
 
         private static void RegisterBusComponents(IUnityContainer container)
         {
-           
             var commandBus = new AzureCommandBus(
                         new TopicSender(
                             AzureConstants.Topic, AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
                             AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
                             AzureConstants.ServicePath));
             container.RegisterInstance<ICommandBus>(commandBus);
-
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SuitSupply.Domain.Product.Handlers
         ICommandHandler<UpdateProductCommand>,
         ICommandHandler<UpdateProductsCommand>
     {
-        private Lazy<IUnitOfWork> _dataAccess;
+        private readonly Lazy<IUnitOfWork> _dataAccess;
         public ProductHandler(Func<IUnitOfWork> dataAccessInstanceMethod)
         {
             _dataAccess = new Lazy<IUnitOfWork>(dataAccessInstanceMethod);
@@ -49,6 +49,27 @@ namespace SuitSupply.Domain.Product.Handlers
         {
             var product = command.ProductDto;
             _dataAccess.Value.AddEntity(product);
+        }
+
+        public void Handle(ICommand command)
+        {
+            if (command.GetType()==typeof(AddProductCommand))
+            {
+                Handle(command as AddProductCommand);
+            }
+            else if (command.GetType() == typeof(AddProductsCommand))
+            {
+                Handle(command as AddProductsCommand);
+            }
+            else if (command.GetType() == typeof(UpdateProductsCommand))
+            {
+                Handle(command as UpdateProductsCommand);
+            }
+
+            else if (command.GetType() == typeof(UpdateProductCommand))
+            {
+                Handle(command as UpdateProductCommand);
+            }
         }
     }
 }

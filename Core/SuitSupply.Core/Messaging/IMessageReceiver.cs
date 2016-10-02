@@ -16,11 +16,11 @@ namespace SuitSupply.Core.Messaging
         /////     Starts the listener.
         ///// </summary>
         ///// <param name="messageHandler">Handler for incoming messages. The return value indicates how to release the message lock.</param>
-        //void Start(Func<BrokeredMessage> messageHandler);
+        void Start();
 
         ///// <summary>
         /////     Stops the listener.
         ///// </summary>
-        //void Stop();
+        void Stop();
     }
 }

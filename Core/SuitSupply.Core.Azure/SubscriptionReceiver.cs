@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using SuitSupply.Core.Messaging;
 
 namespace SuitSupply.Core.Azure
 {
-   public  class SubscriptionReceiver
+   public  class SubscriptionReceiver: IMessageReceiver
     {
         private readonly SubscriptionClient _client;
         private readonly string _subscription;
         private readonly object _lockObject = new object();
         private readonly TokenProvider _tokenProvider;
         private readonly string _topic;
-        private CancellationTokenSource _cancellationSource;
-
+        private readonly CancellationTokenSource _cancellationSource;
+        private ICommandHandlerRegistery _handler;
         public SubscriptionReceiver(string topic, string subscription, string tokenIssuer, string tokenAccessKey,
-            string serviceUriScheme, string serviceNamespace, string servicePath)
+            string serviceUriScheme, string serviceNamespace, string servicePath,
+            ICommandHandlerRegistery handler)
         {
             _topic = topic;
             _subscription = subscription;
+            _handler = handler;
             //_instrumentation = instrumentation;
 
             _tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(tokenIssuer,
@@ -33,7 +38,7 @@ namespace SuitSupply.Core.Azure
             var messagingFactory = MessagingFactory.Create(serviceUri, _tokenProvider);
             _client = messagingFactory.CreateSubscriptionClient(topic, subscription, ReceiveMode.ReceiveAndDelete);
             _client.PrefetchCount = 18;
-
+            _cancellationSource= new CancellationTokenSource();
         }
 
 
@@ -62,5 +67,34 @@ namespace SuitSupply.Core.Azure
            
         }
 
+        public void Start()
+        {
+            Start(MessageHandler);
+        }
+
+        private void MessageHandler(BrokeredMessage message)
+        {
+            JsonTextSerializer serializer = new JsonTextSerializer();
+
+            using (var stream = message.GetBody<Stream>())
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    try
+                    {
+                        ICommand payLoad = serializer.Deserialize(reader) as ICommand;
+                        _handler.ProcessCommand(payLoad);
+
+                    }
+                    catch (SerializationException e)
+                    {
+                    }
+                }
+            }
+        }
+
+        public void Stop()
+        {
+        }
     }
 }

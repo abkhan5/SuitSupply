@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureCommandBus.cs" />
+    <Compile Include="AzureCommandHandlerRegistery.cs" />
     <Compile Include="AzureConstants.cs" />
     <Compile Include="JsonTextSerializer.cs" />
     <Compile Include="SubscriptionReceiver.cs" />
