@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace SuitSupply.Core.Messaging
 {
   public  interface ICommandBus

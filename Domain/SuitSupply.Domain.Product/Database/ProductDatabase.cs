@@ -15,7 +15,10 @@ namespace SuitSupply.Domain.Product.Database
 
         protected override void OnModelCreation(DbModelBuilder modelBuilder)
         {
-            
+            modelBuilder.RegisterEntityType(typeof(Entities.Product));
+            modelBuilder.RegisterEntityType(typeof(Entities.ProductProfile));
+            modelBuilder.RegisterEntityType(typeof(Entities.ProductPhotos));
+            modelBuilder.Entity<Entities.ProductPhotos>().Property(p => p.ProductImage).HasColumnType("image");
         }
     }
 }

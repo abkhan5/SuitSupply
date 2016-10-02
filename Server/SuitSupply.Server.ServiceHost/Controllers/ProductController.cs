@@ -1,39 +1,54 @@
-﻿using System;
+﻿#region Namespace
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using SuitSupply.Core.Messaging;
+using SuitSupply.Domain.Product.Command;
+using SuitSupply.Domain.Product.ReadModel;
+using SuitSupply.Server.ServiceHost.Models;
 
+#endregion
 namespace SuitSupply.Server.ServiceHost.Controllers
 {
     public class ProductController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        private readonly IProductDao _dal;
+        private readonly ICommandBus _bus;
+        public ProductController(ICommandBus bus, IProductDao dal)
         {
-            return new string[] { "value1", "value2" };
+            _dal = dal;
+            _bus = bus;
+        }
+
+        [HttpGet]
+        public IEnumerable<ProductDto> Get()
+        {
+            var products = _dal.GetProducts().ProductPocoToDto().ToList();
+            return products;
+        }
+
+        [HttpGet]
+        public ProductDto Get(int productCode)
+        {
+            var product = _dal.GetProduct(productCode).ProductPocoToDto();
+            return product;
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public void Post(ProductDto productDto)
         {
+            var product = productDto.ProductDtoToPoco();
+            var command = new AddProductCommand() {ProductDto = product};
+            _bus.Send(command);
+            //_dal.AddProduct(product);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
+        
+        
     }
 }

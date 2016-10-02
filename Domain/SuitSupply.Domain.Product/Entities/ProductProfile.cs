@@ -1,3 +1,5 @@
+using SuitSupply.Core.Extensions;
+
 namespace SuitSupply.Domain.Product.Entities
 {
     using System;
@@ -9,6 +11,11 @@ namespace SuitSupply.Domain.Product.Entities
     [Table("SuitSupply.ProductProfile")]
     public partial class ProductProfile
     {
+        public ProductProfile()
+        {
+            CreatedOn = DateTime.Now.ToUtcTime();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -19,6 +26,5 @@ namespace SuitSupply.Domain.Product.Entities
 
         public DateTime CreatedOn { get; set; }
 
-        public virtual Product Product { get; set; }
     }
 }

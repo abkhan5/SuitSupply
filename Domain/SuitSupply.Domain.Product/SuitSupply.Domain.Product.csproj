@@ -75,7 +75,6 @@
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductImage.cs" />
     <Compile Include="Entities\ProductProfile.cs" />
-    <Compile Include="Entities\SuitSupplyDataModel.cs" />
     <Compile Include="Handlers\ProductHandler.cs" />
     <Compile Include="ProductDomain.cs" />
     <Compile Include="ProductDomainConstant.cs" />

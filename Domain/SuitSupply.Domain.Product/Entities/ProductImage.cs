@@ -1,3 +1,5 @@
+using SuitSupply.Core.Extensions;
+
 namespace SuitSupply.Domain.Product.Entities
 {
     using System;
@@ -6,19 +8,23 @@ namespace SuitSupply.Domain.Product.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("SuitSupply.ProductImages")]
-    public partial class ProductImage
+    [Table("SuitSupply.ProductPhotos")]
+    public partial class ProductPhotos
     {
+        public ProductPhotos()
+        {
+            CreatedOn = DateTime.Now.ToUtcTime();
+        }
+
         public int Id { get; set; }
 
         [Column("ProductImage", TypeName = "image")]
         [Required]
-        public byte[] ProductImage1 { get; set; }
+        public byte[] ProductImage { get; set; }
 
         public int ProductId { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public virtual Product Product { get; set; }
     }
 }

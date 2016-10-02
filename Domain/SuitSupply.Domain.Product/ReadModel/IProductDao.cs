@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace SuitSupply.Domain.Product.ReadModel
 {
    public interface  IProductDao
-    {
-    }
+   {
+       IEnumerable<Entities.Product> GetProducts();
+       Entities.Product GetProduct(int productCode);
+       void AddProduct(Entities.Product product);
+   }
 }

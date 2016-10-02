@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureCommandBus.cs" />
     <Compile Include="AzureConstants.cs" />
     <Compile Include="JsonTextSerializer.cs" />
     <Compile Include="SubscriptionReceiver.cs" />

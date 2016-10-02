@@ -11,18 +11,10 @@ namespace SuitSupply.Domain.Product.Test
         [TestMethod]
         public void RegistrationTest()
         {
-            try
-            {
-                var container = new UnityContainer();
-                container.RegisterInstance(container);
-                container.Resolve<ProductDomain>();
-                var pd = container.Resolve<IProductDao>();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            container.Resolve<ProductDomain>();
+            var pd = container.Resolve<IProductDao>();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace SuitSupply.Core.Azure
         /// Initializes a new instance of the <see cref="TopicSender"/> class, 
         /// automatically creating the given topic if it does not exist.
         /// </summary>
-        protected TopicSender(string topic,
+        public TopicSender(string topic,
             string tokenIssuer,
             string tokenAccessKey,
             string serviceUriScheme,
@@ -45,22 +45,10 @@ namespace SuitSupply.Core.Azure
             this.topicClient = factory.CreateTopicClient(this.topic);
         }
 
-        public void Send(
-            Func<ICommand> messageFactory,
-            Action callBackOnSuccessFull, 
-            Action<Exception> callBackOnFail)
+        public void Send(ICommand command)
         {
-            try
-            {
-                var command = messageFactory();
                 var payload = BuildMessage(command);
                 this.topicClient.Send(payload);
-                callBackOnSuccessFull();
-            }
-            catch (Exception ex)
-            {
-                callBackOnFail(ex);
-            }
         }
 
         private BrokeredMessage BuildMessage(ICommand command)
