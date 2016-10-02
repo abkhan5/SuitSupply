@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuitSupply.Core.Messaging
+namespace SuitSupply.Core.Azure
 {
-  public interface IMessage
-    {
-
-    }
+   public class AzureConstants
+   {
+       public const string Topic = "SuitCommand";
+   }
 }

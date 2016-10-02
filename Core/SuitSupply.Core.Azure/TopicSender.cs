@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,7 +20,7 @@ namespace SuitSupply.Core.Azure
         private readonly RetryPolicy retryPolicy;
         private readonly TopicClient topicClient;
 
-       
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TopicSender"/> class, 
@@ -35,93 +36,51 @@ namespace SuitSupply.Core.Azure
             this.topic = topic;
 
             this.tokenProvider = TokenProvider.
-                CreateSharedSecretTokenProvider(tokenIssuer,tokenAccessKey);
+                CreateSharedAccessSignatureTokenProvider(tokenIssuer, tokenAccessKey);
             this.serviceUri = ServiceBusEnvironment.
-                CreateServiceUri(serviceUriScheme, 
-                serviceNamespace, servicePath);
+                CreateServiceUri(serviceUriScheme,
+                    serviceNamespace, servicePath);
 
             var factory = MessagingFactory.Create(this.serviceUri, this.tokenProvider);
             this.topicClient = factory.CreateTopicClient(this.topic);
         }
 
-        /// <summary>
-        /// Notifies that the sender is retrying due to a transient fault.
-        /// </summary>
-
-        /// <summary>
-        /// Asynchronously sends the specified message.
-        /// </summary>
-        public void SendAsync(Func<BrokeredMessage> messageFactory)
-        {
-            // TODO: SendAsync is not currently being used by the app or infrastructure.
-            // Consider removing or have a callback notifying the result.
-            // Always send async.
-            this.SendAsync(messageFactory, () => { }, ex => { });
-        }
-        
-
-        public void SendAsync(Func<BrokeredMessage> messageFactory, Action successCallback, Action<Exception> exceptionCallback)
-        {
-            this.retryPolicy.ExecuteAction(
-                ac => this.DoBeginSendMessage(messageFactory(), ac),
-                this.DoEndSendMessage,
-                successCallback,
-                ex =>
-                {
-                    Trace.TraceError("An unrecoverable error occurred while trying to send a message:\r\n{0}", ex);
-                    exceptionCallback(ex);
-                });
-        }
-
-        public void Send(Func<BrokeredMessage> messageFactory)
-        {
-            var resetEvent = new ManualResetEvent(false);
-            Exception exception = null;
-
-            this.SendAsync(
-                messageFactory,
-                () => resetEvent.Set(),
-                ex =>
-                {
-                    exception = ex;
-                    resetEvent.Set();
-                });
-
-            resetEvent.WaitOne();
-            if (exception != null)
-            {
-                throw exception;
-            }
-        }
-
-        protected virtual void DoBeginSendMessage(BrokeredMessage message, AsyncCallback ac)
+        public void Send(
+            Func<ICommand> messageFactory,
+            Action callBackOnSuccessFull, 
+            Action<Exception> callBackOnFail)
         {
             try
             {
-                this.topicClient.BeginSend(message, ac, message);
+                var command = messageFactory();
+                var payload = BuildMessage(command);
+                this.topicClient.Send(payload);
+                callBackOnSuccessFull();
+            }
+            catch (Exception ex)
+            {
+                callBackOnFail(ex);
+            }
+        }
+
+        private BrokeredMessage BuildMessage(ICommand command)
+        {
+            var stream = new MemoryStream();
+            try
+            {
+                var writer = new StreamWriter(stream);
+                JsonTextSerializer serializer= new JsonTextSerializer();
+                serializer.Serialize(writer, command);
+                stream.Position = 0;
+
+                var message = new BrokeredMessage(stream, true);
+                return message;
             }
             catch
             {
-                message.Dispose();
+                stream.Dispose();
                 throw;
             }
-        }
-
-        protected virtual void DoEndSendMessage(IAsyncResult ar)
-        {
-            try
-            {
-                this.topicClient.EndSend(ar);
-            }
-            finally
-            {
-                using (ar.AsyncState as IDisposable) { }
-            }
-        }
-
-        public void Send(Func<IMessage> messageFactory)
-        {
-            throw new NotImplementedException();
         }
     }
 }

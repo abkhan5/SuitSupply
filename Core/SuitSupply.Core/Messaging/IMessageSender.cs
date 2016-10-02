@@ -14,7 +14,7 @@ namespace SuitSupply.Core.Messaging
         /// <summary>
         /// Sends the specified message synchronously.
         /// </summary>
-        void Send(Func<IMessage> messageFactory);
+        void Send(Func<ICommand> messageFactory,Action callBackOnSuccessFull, Action<Exception> callBackOnFail);
 
     }
 }
