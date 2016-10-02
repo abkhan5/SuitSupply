@@ -48,6 +48,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{5C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.WorkerJob", "Server\SuitSupply.WorkerJob\SuitSupply.WorkerJob.csproj", "{CBDDB46E-BCCF-4DDF-9B44-23FBAD57CBA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.Client", "Client\SuitSupply.Client\SuitSupply.Client.csproj", "{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.DataObject", "Domain\SuitSupply.DataObject\SuitSupply.DataObject.csproj", "{DB19D03C-0058-42C5-9AEF-F606D24265A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,14 @@ Global
 		{CBDDB46E-BCCF-4DDF-9B44-23FBAD57CBA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBDDB46E-BCCF-4DDF-9B44-23FBAD57CBA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBDDB46E-BCCF-4DDF-9B44-23FBAD57CBA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB19D03C-0058-42C5-9AEF-F606D24265A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB19D03C-0058-42C5-9AEF-F606D24265A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB19D03C-0058-42C5-9AEF-F606D24265A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB19D03C-0058-42C5-9AEF-F606D24265A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,5 +118,7 @@ Global
 		{E37A8E95-1511-466F-8A59-27CC6747470B} = {5014FCC0-48C0-4E16-8EA0-BE5B9EB20DF1}
 		{30D49B83-9481-427B-8670-815C6C705DA6} = {5CEAC505-9899-45A4-AC98-0688366246C2}
 		{CBDDB46E-BCCF-4DDF-9B44-23FBAD57CBA3} = {BB392713-19B3-49E6-A28A-17A027FD8B6B}
+		{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE} = {F5639547-BB78-4375-949D-8BE8667CE791}
+		{DB19D03C-0058-42C5-9AEF-F606D24265A2} = {CED280AE-9213-4FDA-BBCF-1E89E6E23BC5}
 	EndGlobalSection
 EndGlobal

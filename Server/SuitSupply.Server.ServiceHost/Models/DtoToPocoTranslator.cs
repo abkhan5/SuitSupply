@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using SuitSupply.Domain.Product.Entities;
-
+using SuitSupply.DataObject;
 namespace SuitSupply.Server.ServiceHost.Models
 {
     public static class DtoToPocoTranslator
@@ -16,11 +14,21 @@ namespace SuitSupply.Server.ServiceHost.Models
             }
         }
 
-        public static ProductDto ProductPocoToDto(this Product from )
+        public static ProductDto ProductPocoToDto(this Product product)
         {
-            return new ProductDto(from);
-        }
+            ProductDto model = new ProductDto();
+            model.Id = product.Id;
+            model.CreatedOn = product.CreatedOn;
+            var productProfile = product.ProductProfiles.OrderByDescending(item => item.CreatedOn).First();
 
+            model.ProductName = productProfile.ProductName;
+            if (product.ProductImages != null)
+            {
+                model.ProductImages = product.ProductImages.Select(item => item.ProductImage).ToList();
+            }
+            return model;
+        }
+       
         public static Product ProductDtoToPoco(this ProductDto from)
         {
             var product= new Product();

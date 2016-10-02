@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using SuitSupply.Core.Messaging;
+using SuitSupply.DataObject;
 using SuitSupply.Domain.Product.Command;
 using SuitSupply.Domain.Product.ReadModel;
 using SuitSupply.Server.ServiceHost.Models;
@@ -40,6 +41,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [ActionName("AddProduct")]
         public void Post(ProductDto productDto)
         {
             var product = productDto.ProductDtoToPoco();
