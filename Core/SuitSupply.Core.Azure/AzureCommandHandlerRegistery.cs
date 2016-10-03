@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SuitSupply.Core.Messaging;
 
 namespace SuitSupply.Core.Azure
@@ -10,10 +11,29 @@ namespace SuitSupply.Core.Azure
         {
             _commandHandlers= new Dictionary<string, ICommandHandler>();
         }
-        public void Registery(ICommandHandler command) 
+        public void Registery(ICommandHandler commandHandler)
         {
-            _commandHandlers[command.GetType().Name] = command ;
+            var genericHandler = typeof(ICommandHandler<>);
+            var supportedCommandTypes = commandHandler.GetType()
+                .GetInterfaces()
+                .Where(iface => iface.IsGenericType && (iface.GetGenericTypeDefinition() == genericHandler))
+                .Select(iface => iface.GetGenericArguments()[0])
+                .ToList();
+
+            // Register this handler for each of he handled types.
+            foreach (var commandType in supportedCommandTypes)
+            {
+                _commandHandlers.Add(commandType.Name, commandHandler);
+            }
+            
         }
+
+       private string GetCommandName<T>(ICommandHandler<T> commandHandler) where T : ICommand
+       {
+           var commandType= typeof(T);
+           var name = commandType.Name;
+           return name;
+       }
 
        public void ProcessCommand(ICommand command)
        {

@@ -18,6 +18,6 @@ namespace SuitSupply.Domain.Product.Command
             get;set;
         }
 
-        public object ProductDto { get; set; }
+        public Entities.Product ProductDetails { get; set; }
     }
 }

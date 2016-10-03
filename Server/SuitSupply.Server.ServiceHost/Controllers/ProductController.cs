@@ -45,7 +45,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         public void Post(ProductDto productDto)
         {
             var product = productDto.ProductDtoToPoco();
-            var command = new AddProductCommand() {ProductDto = product};
+            var command = new AddProductCommand() {ProductDetails = product};
             _bus.Send(command);
             //_dal.AddProduct(product);
         }

@@ -47,8 +47,9 @@ namespace SuitSupply.Domain.Product.Handlers
 
         public void Handle(AddProductCommand command)
         {
-            var product = command.ProductDto;
+            var product = command.ProductDetails;
             _dataAccess.Value.AddEntity(product);
+            _dataAccess.Value.Save();
         }
 
         public void Handle(ICommand command)

@@ -47,8 +47,7 @@ namespace SuitSupply.Client
       static int PrintOptions()
         {
             Console.WriteLine("1. All Products");
-
-            Console.WriteLine("2. Update Product");
+            Console.WriteLine("2. Add Product");
             var resp = Console.ReadLine();
             if (string.IsNullOrEmpty(resp))
             {
