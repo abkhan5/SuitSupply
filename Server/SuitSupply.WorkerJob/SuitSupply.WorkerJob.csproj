@@ -86,10 +86,6 @@
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Client\SuitSupply.Client\SuitSupply.Client.csproj">
-      <Project>{a52ad950-b7fa-484a-a8a9-ba88a6fd4efe}</Project>
-      <Name>SuitSupply.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\SuitSupply.Core.Azure\SuitSupply.Core.Azure.csproj">
       <Project>{e37a8e95-1511-466f-8a59-27cc6747470b}</Project>
       <Name>SuitSupply.Core.Azure</Name>
@@ -106,6 +102,9 @@
       <Project>{8e999608-584d-469f-9cc0-77fbc8557235}</Project>
       <Name>SuitSupply.Domain.Product</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Parameters.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Web.WebJobs.Publish.1.0.12\tools\webjobs.targets" Condition="Exists('..\..\packages\Microsoft.Web.WebJobs.Publish.1.0.12\tools\webjobs.targets')" />
