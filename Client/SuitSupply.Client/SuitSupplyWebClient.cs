@@ -14,14 +14,14 @@ namespace SuitSupply.Client
         public SuitSupplyWebClient()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri(ServicePath);
+            _client.BaseAddress = new Uri(AzureServicePath);
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
          }
 
         private readonly HttpClient _client ;
         private const string ServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
-
+        private const string AzureServicePath = "http://suitsupplywebapi.azurewebsites.net/";
 
         public async Task PostProduct()
         {

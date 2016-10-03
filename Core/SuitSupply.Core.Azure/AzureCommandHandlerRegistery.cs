@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SuitSupply.Core.Messaging;
 
@@ -37,8 +38,12 @@ namespace SuitSupply.Core.Azure
 
        public void ProcessCommand(ICommand command)
        {
-           var handler = _commandHandlers[command.GetType().Name];
+           var name = command.GetType().Name;
+           Console.WriteLine("Received command "+name);
+           var handler = _commandHandlers[name];
            handler.Handle(command);
-       }
-   }
+            Console.WriteLine("Command " + name+" handled");
+
+        }
+    }
 }
