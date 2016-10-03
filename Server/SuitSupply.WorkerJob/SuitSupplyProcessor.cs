@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
+using SuitSupply.Core;
 using SuitSupply.Core.Azure;
+using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.Product.Handlers;
 
@@ -17,6 +19,11 @@ namespace SuitSupply.WorkerJob
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterInstance(container);
+
+            container.RegisterType<IUnitOfWork, EventDbContext>
+                (Constants.EventContextName,
+                new ContainerControlledLifetimeManager(),
+                 new InjectionConstructor(DataAccessConstants.SuitConnectionString));
             RegisterDomain(container);
             RegisterAzureComponent(container);
             _container = container;

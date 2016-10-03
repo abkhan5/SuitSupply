@@ -1,6 +1,7 @@
 ﻿#region Namespace
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #endregion
 namespace SuitSupply.DataObject
@@ -11,13 +12,21 @@ namespace SuitSupply.DataObject
 
         public DateTime CreatedOn { get; set; }
 
+        public int ProductCode { get; set; }
+
         public string ProductName { get; set; }
 
         public IEnumerable<byte[]> ProductImages { get; set; }
 
         public override string ToString()
         {
-            return "Product Name = "+ProductName;
+            var message= "Product Name = "+ProductName+" with ID "+Id;
+            if (ProductImages!=null && ProductImages.Any())
+            {
+                message += " Total Photos " + ProductImages.Count();
+            }
+
+            return message;
         }
     }
 

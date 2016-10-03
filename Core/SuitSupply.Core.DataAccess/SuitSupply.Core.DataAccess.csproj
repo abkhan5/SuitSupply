@@ -51,12 +51,20 @@
   <ItemGroup>
     <Compile Include="DataAccessConstants.cs" />
     <Compile Include="DbContextBase.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="EventDbContext.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuitSupply.Core\SuitSupply.Core.csproj">
+      <Project>{e8fe7e2c-24b0-4be1-822a-ee4a5af3e7a5}</Project>
+      <Name>SuitSupply.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

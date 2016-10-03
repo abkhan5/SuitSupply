@@ -68,10 +68,12 @@
     <Build Include="Security\Static.sql" />
     <Build Include="Security\SuitSupply.sql" />
     <Build Include="SuitSupply\Tables\Product.sql" />
-    <Build Include="SuitSupply\Tables\ProductProfile.sql" />
     <Build Include="SuitSupply\Tables\ProductPhotos.sql" />
     <Build Include="SuitSupply\Views\Security_Product.sql" />
-    <Build Include="SuitSupply\Views\Security_ProductProfile.sql" />
     <Build Include="SuitSupply\Views\Security_ProductPhoto.sql" />
+    <Build Include="SuitSupply\Tables\Event.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Script.PreDeployment.sql" />
   </ItemGroup>
 </Project>

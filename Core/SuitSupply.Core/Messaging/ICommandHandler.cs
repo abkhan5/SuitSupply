@@ -1,6 +1,7 @@
 ﻿#region Namespace
 
 #endregion
+
 namespace SuitSupply.Core.Messaging
 {
     public interface ICommandHandler

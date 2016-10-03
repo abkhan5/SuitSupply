@@ -29,7 +29,6 @@ namespace SuitSupply.Domain.Product.Test
         }
 
         [TestMethod]
-
         public void AddProductTest()
         {
             var container = new UnityContainer();
@@ -39,6 +38,23 @@ namespace SuitSupply.Domain.Product.Test
             var pd = container.Resolve<IProductDao>();
             pd.AddProduct(product);
             Assert.IsTrue(product.Id!=0);
+        }
+
+        [TestMethod]
+        public void UpdateProductTest()
+        {
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            container.Resolve<ProductDomain>();
+            var product = ProductData.GetProduct();
+            var pd = container.Resolve<IProductDao>();
+            pd.AddProduct(product);
+            Assert.IsTrue(product.Id != 0);
+            pd = container.Resolve<IProductDao>();
+            var productId = product.Id;
+            product = pd.GetProduct(product.Id);
+            product.ProductName = "Romeo";
+            pd.UpdateProduct(product);
         }
 
         [TestMethod]

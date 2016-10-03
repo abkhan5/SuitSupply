@@ -3,4 +3,12 @@
   <parameter name="SuitSupply.Domain.Product.Database.ProductDatabase-Web.config Connection String"
     description="DefaultConnection"
       defaultValue="Server=tcp:x.database.windows.net,1433;Database=x_db;User ID=x@y;Password=z;Trusted_Connection=False;etc." tags="" />
+
+
+  <parameter name="SuitSupply.Core.DataAccess.EventDbContext-Web.config Connection String"
+    description="DefaultConnection"
+      defaultValue="Server=tcp:x.database.windows.net,1433;Database=x_db;User ID=x@y;Password=z;Trusted_Connection=False;etc." tags="" />
+
+
+
 </parameters>

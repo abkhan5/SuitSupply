@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus;
@@ -12,15 +9,16 @@ using SuitSupply.Core.Messaging;
 
 namespace SuitSupply.Core.Azure
 {
-   public  class SubscriptionReceiver: IMessageReceiver
+    public class SubscriptionReceiver : IMessageReceiver
     {
+        private readonly CancellationTokenSource _cancellationSource;
         private readonly SubscriptionClient _client;
-        private readonly string _subscription;
         private readonly object _lockObject = new object();
+        private readonly string _subscription;
         private readonly TokenProvider _tokenProvider;
         private readonly string _topic;
-        private readonly CancellationTokenSource _cancellationSource;
-        private ICommandHandlerRegistery _handler;
+        private readonly ICommandHandlerRegistery _handler;
+
         public SubscriptionReceiver(string topic, string subscription, string tokenIssuer, string tokenAccessKey,
             string serviceUriScheme, string serviceNamespace, string servicePath,
             ICommandHandlerRegistery handler)
@@ -38,12 +36,21 @@ namespace SuitSupply.Core.Azure
             var messagingFactory = MessagingFactory.Create(serviceUri, _tokenProvider);
             _client = messagingFactory.CreateSubscriptionClient(topic, subscription, ReceiveMode.ReceiveAndDelete);
             _client.PrefetchCount = 18;
-            _cancellationSource= new CancellationTokenSource();
+            _cancellationSource = new CancellationTokenSource();
+        }
+
+        public void Start()
+        {
+            Start(MessageHandler);
+        }
+
+        public void Stop()
+        {
         }
 
 
         /// <summary>
-        ///  Starts the listener.
+        ///     Starts the listener.
         /// </summary>
         public void Start(Action<BrokeredMessage> messageHandler)
         {
@@ -64,17 +71,11 @@ namespace SuitSupply.Core.Azure
             options.AutoComplete = false;
             options.AutoRenewTimeout = TimeSpan.FromMinutes(1);
             _client.OnMessage(msg => { messageHandler(msg); }, options);
-           
-        }
-
-        public void Start()
-        {
-            Start(MessageHandler);
         }
 
         private void MessageHandler(BrokeredMessage message)
         {
-            JsonTextSerializer serializer = new JsonTextSerializer();
+            var serializer = new JsonTextSerializer();
 
             using (var stream = message.GetBody<Stream>())
             {
@@ -82,19 +83,14 @@ namespace SuitSupply.Core.Azure
                 {
                     try
                     {
-                        ICommand payLoad = serializer.Deserialize(reader) as ICommand;
+                        var payLoad = serializer.Deserialize(reader) as ICommand;
                         _handler.ProcessCommand(payLoad);
-
                     }
                     catch (SerializationException e)
                     {
                     }
                 }
             }
-        }
-
-        public void Stop()
-        {
         }
     }
 }

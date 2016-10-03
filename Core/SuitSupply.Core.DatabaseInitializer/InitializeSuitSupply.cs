@@ -14,15 +14,11 @@ namespace SuitSupply.Core.DatabaseInitializer
     {
         public InitializeSuitSupply()
         {
-
-            
             if (Database.Exists(DataAccessConstants.SuitConnectionString))
-            {
                 return;
-            }
 
 
-            Database.SetInitializer<ProductDatabase>(new DropCreateDatabaseAlways<ProductDatabase>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<ProductDatabase>());
 
             IUnityContainer container = new UnityContainer();
             container.RegisterInstance(container);
@@ -30,9 +26,6 @@ namespace SuitSupply.Core.DatabaseInitializer
 
             var dal = container.Resolve<IProductDao>();
             dal.AddProduct(GetProduct());
-
-
-
         }
 
 

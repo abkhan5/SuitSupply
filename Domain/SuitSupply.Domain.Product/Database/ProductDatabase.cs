@@ -8,17 +8,16 @@ namespace SuitSupply.Domain.Product.Database
     public class ProductDatabase : DbContextBase
     {
         public ProductDatabase(string conn):base(conn)
-            //:base(DataAccessConstants.SuitConnectionString)
         {
 
         }
 
         protected override void OnModelCreation(DbModelBuilder modelBuilder)
         {
+            modelBuilder.RegisterEntityType(typeof(Event));
             modelBuilder.RegisterEntityType(typeof(Entities.Product));
-            modelBuilder.RegisterEntityType(typeof(Entities.ProductProfile));
-            modelBuilder.RegisterEntityType(typeof(Entities.ProductPhotos));
-            modelBuilder.Entity<Entities.ProductPhotos>().Property(p => p.ProductImage).HasColumnType("image");
+            modelBuilder.RegisterEntityType(typeof(Entities.ProductPhoto));
+            modelBuilder.Entity<Entities.ProductPhoto>().Property(p => p.ProductImage).HasColumnType("image");
         }
     }
 }

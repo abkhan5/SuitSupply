@@ -26,14 +26,15 @@ namespace SuitSupply.Domain.Product.ReadModel.Implementation
 
         private IQueryable<Entities.Product> ProductQuery()
         {
-            var products = _dataAccess.Query<Entities.Product>().Include(item => item.ProductImages).Include(item => item.ProductProfiles);
+            var products = _dataAccess.Query<Entities.Product>().
+                Include(item => item.ProductPhotos);
             return products;
         }
 
-        public Entities.Product GetProduct(int productCode)
+        public Entities.Product GetProduct(int productId)
         {
             var product = ProductQuery().
-                FirstOrDefault(item=> item.ProductCode==productCode);
+                FirstOrDefault(item=> item.Id== productId);
             return product;
         }
 
@@ -41,6 +42,13 @@ namespace SuitSupply.Domain.Product.ReadModel.Implementation
         {
             _dataAccess.AddEntity(product);
             _dataAccess.Save();
+        }
+
+        public  void UpdateProduct(Entities.Product product)
+        {
+            _dataAccess.Update(product);
+            _dataAccess.Save();
+
         }
     }
 }

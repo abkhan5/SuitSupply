@@ -1,26 +1,27 @@
 ﻿#region Namespace
-using SuitSupply.Core.Messaging;
+
 using System;
 using System.IO;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using SuitSupply.Core.Messaging;
 
 #endregion
+
 namespace SuitSupply.Core.Azure
 {
     public class TopicSender : IMessageSender
     {
-        private readonly TokenProvider _tokenProvider;
-        private readonly Uri _serviceUri;
-        private readonly string _topic;
         private readonly RetryPolicy _retryPolicy;
+        private readonly Uri _serviceUri;
+        private readonly TokenProvider _tokenProvider;
+        private readonly string _topic;
         private readonly TopicClient _topicClient;
 
 
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="TopicSender"/> class, 
-        /// automatically creating the given topic if it does not exist.
+        ///     Initializes a new instance of the <see cref="TopicSender" /> class,
+        ///     automatically creating the given topic if it does not exist.
         /// </summary>
         public TopicSender(string topic,
             string tokenIssuer,
@@ -29,22 +30,22 @@ namespace SuitSupply.Core.Azure
             string serviceNamespace,
             string servicePath)
         {
-            this._topic = topic;
+            _topic = topic;
 
-            this._tokenProvider = TokenProvider.
+            _tokenProvider = TokenProvider.
                 CreateSharedAccessSignatureTokenProvider(tokenIssuer, tokenAccessKey);
-            this._serviceUri = ServiceBusEnvironment.
+            _serviceUri = ServiceBusEnvironment.
                 CreateServiceUri(serviceUriScheme,
                     serviceNamespace, servicePath);
 
-            var factory = MessagingFactory.Create(this._serviceUri, this._tokenProvider);
-            this._topicClient = factory.CreateTopicClient(this._topic);
+            var factory = MessagingFactory.Create(_serviceUri, _tokenProvider);
+            _topicClient = factory.CreateTopicClient(_topic);
         }
 
         public void Send(ICommand command)
         {
-                var payload = BuildMessage(command);
-                this._topicClient.Send(payload);
+            var payload = BuildMessage(command);
+            _topicClient.Send(payload);
         }
 
         private BrokeredMessage BuildMessage(ICommand command)
@@ -53,7 +54,7 @@ namespace SuitSupply.Core.Azure
             try
             {
                 var writer = new StreamWriter(stream);
-                JsonTextSerializer serializer= new JsonTextSerializer();
+                var serializer = new JsonTextSerializer();
                 serializer.Serialize(writer, command);
                 stream.Position = 0;
 

@@ -1,8 +1,13 @@
 ﻿#region Namespace
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Http;
+using Microsoft.Practices.Unity;
+using SuitSupply.Core;
+using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.DataObject;
 using SuitSupply.Domain.Product.Command;
@@ -16,10 +21,12 @@ namespace SuitSupply.Server.ServiceHost.Controllers
     {
         private readonly IProductDao _dal;
         private readonly ICommandBus _bus;
-        public ProductController(ICommandBus bus, IProductDao dal)
+        private readonly IUnityContainer _container;
+        public ProductController(ICommandBus bus, IProductDao dal,IUnityContainer container)
         {
             _dal = dal;
             _bus = bus;
+            _container = container;
         }
 
         [HttpGet]
@@ -42,15 +49,35 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         // POST api/<controller>
         [HttpPost]
         //[ActionName("AddProduct")]
-        public void Post(ProductDto productDto)
+        public string Post(ProductDto productDto)
         {
             var product = productDto.ProductDtoToPoco();
             var command = new AddProductCommand() {ProductDetails = product};
             _bus.Send(command);
-            //_dal.AddProduct(product);
+            var commandResult = WaitUntilAvailable(command.Id.ToString());
+            return commandResult ? "Success" : "Failed";
+
+        }
+        private bool WaitUntilAvailable(string commandId)
+        {
+            var deadline = DateTime.Now.AddSeconds(Constants.WaitTimeoutInSeconds);
+            var eventDal = _container.Resolve<IUnitOfWork>(Constants.EventContextName);
+            
+            while (DateTime.Now < deadline)
+            {
+                var eventResult = eventDal.Query<Event>().FirstOrDefault(item=>item.CommandId==commandId);
+
+                if (eventResult != null)
+                {
+                    return eventResult.WasCommandSuccessfull;
+                }
+
+                Thread.Sleep(500);
+            }
+
+            return false;
         }
 
-        
-        
+
     }
 }

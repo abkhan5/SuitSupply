@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SuitSupply.Core.Messaging
+﻿namespace SuitSupply.Core.Messaging
 {
     /// <summary>
     ///     Abstracts the behavior of a receiving component that raises

@@ -8,12 +8,14 @@ using SuitSupply.DataObject;
 
 namespace SuitSupply.Client
 {
-    class ProductSampleData
+    static class ProductSampleData
     {
         public static ProductDto GetSampleDto()
         {
+            Random random=new Random();
             ProductDto product= new ProductDto();
-            product.ProductName = "Cola";
+            product.ProductName = "Cola"+ random.Next(2);
+            product.ProductCode = random.Next(99999);
             product.CreatedOn=DateTime.Now;
             var productImages= new List<byte[]>();
             productImages.Add(ImageExtensions.LoadImageToByte(null, "car2.jpg"));

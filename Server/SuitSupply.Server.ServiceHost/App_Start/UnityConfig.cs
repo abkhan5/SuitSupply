@@ -1,6 +1,8 @@
 using Microsoft.Practices.Unity;
 using System.Web.Http;
+using SuitSupply.Core;
 using SuitSupply.Core.Azure;
+using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.Product;
 using Unity.WebApi;
@@ -11,7 +13,12 @@ namespace SuitSupply.Server.ServiceHost
     {
         public static void RegisterComponents()
         {
-			var container = new UnityContainer();
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            container.RegisterType<IUnitOfWork, EventDbContext>
+                (Constants.EventContextName, 
+                new ContainerControlledLifetimeManager(),
+                 new InjectionConstructor(DataAccessConstants.SuitConnectionString));
             container.Resolve<ProductDomain>();
             RegisterBusComponents(container);
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

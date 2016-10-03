@@ -1,9 +1,6 @@
-﻿
-using System;
-
-namespace SuitSupply.Core.Messaging
+﻿namespace SuitSupply.Core.Messaging
 {
-  public  interface ICommandBus
+    public interface ICommandBus
     {
         void Send(ICommand command);
     }

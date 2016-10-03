@@ -14,6 +14,7 @@ namespace SuitSupply.Domain.Product
 {
     public class ProductDomain
     {
+        
         public ProductDomain(IUnityContainer container)
         {
             RegisterDatabase(container);
@@ -31,7 +32,11 @@ namespace SuitSupply.Domain.Product
 
         private void RegisterCommand(IUnityContainer container)
         {
-            container.RegisterType<ICommandHandler, ProductHandler>(ProductDomainConstant.ProductCommandHandler);
+            container.RegisterType<ICommandHandler, ProductHandler>
+                (ProductDomainConstant.ProductCommandHandler
+                
+                
+                );
         }
     }
 }

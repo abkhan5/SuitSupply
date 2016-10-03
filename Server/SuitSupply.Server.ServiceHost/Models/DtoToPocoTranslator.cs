@@ -19,12 +19,11 @@ namespace SuitSupply.Server.ServiceHost.Models
             ProductDto model = new ProductDto();
             model.Id = product.Id;
             model.CreatedOn = product.CreatedOn;
-            var productProfile = product.ProductProfiles.OrderByDescending(item => item.CreatedOn).First();
-
-            model.ProductName = productProfile.ProductName;
-            if (product.ProductImages != null)
+            model.ProductCode = product.ProductCode;
+            model.ProductName = product.ProductName;
+            if (product.ProductPhotos != null)
             {
-                model.ProductImages = product.ProductImages.Select(item => item.ProductImage).ToList();
+                model.ProductImages = product.ProductPhotos.Select(item => item.ProductImage).ToList();
             }
             return model;
         }
@@ -33,17 +32,15 @@ namespace SuitSupply.Server.ServiceHost.Models
         {
             var product= new Product();
             product.CreatedOn = from.CreatedOn;
-            product.ProductProfiles.Add(new ProductProfile()
-            {
-                CreatedOn = from.CreatedOn,
-                ProductName = from.ProductName
-            });
+            product.ProductName = from.ProductName;
+            product.ProductCode = from.ProductCode;
+
             foreach (var fromProductImage in from.ProductImages)
             {
-                var productPhoto=new ProductPhotos();
+                var productPhoto=new ProductPhoto();
                 productPhoto.CreatedOn = from.CreatedOn;
                 productPhoto.ProductImage = fromProductImage;
-                product.ProductImages.Add(productPhoto);
+                product.ProductPhotos.Add(productPhoto);
             }
             return product;
         }

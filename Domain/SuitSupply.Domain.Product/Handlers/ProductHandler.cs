@@ -14,8 +14,11 @@ namespace SuitSupply.Domain.Product.Handlers
         ICommandHandler<UpdateProductsCommand>
     {
         private readonly Lazy<IUnitOfWork> _dataAccess;
-        public ProductHandler(Func<IUnitOfWork> dataAccessInstanceMethod)
+
+        private readonly Lazy<IUnitOfWork> _eventContextDal;
+        public ProductHandler(Func<IUnitOfWork> dataAccessInstanceMethod,Func<IUnitOfWork> eventContextDal)
         {
+            _eventContextDal = new Lazy<IUnitOfWork>(eventContextDal);
             _dataAccess = new Lazy<IUnitOfWork>(dataAccessInstanceMethod);
         }
 
@@ -54,22 +57,39 @@ namespace SuitSupply.Domain.Product.Handlers
 
         public void Handle(ICommand command)
         {
-            if (command.GetType()==typeof(AddProductCommand))
+            var commandResult= new Event();
+            commandResult.CommandId= command.Id.ToString();
+            commandResult.Payload = command.GetType().Name;
+            commandResult.WasCommandSuccessfull = true;
+            try
             {
-                Handle(command as AddProductCommand);
-            }
-            else if (command.GetType() == typeof(AddProductsCommand))
-            {
-                Handle(command as AddProductsCommand);
-            }
-            else if (command.GetType() == typeof(UpdateProductsCommand))
-            {
-                Handle(command as UpdateProductsCommand);
-            }
+                if (command.GetType() == typeof(AddProductCommand))
+                {
+                    Handle(command as AddProductCommand);
+                }
+                else if (command.GetType() == typeof(AddProductsCommand))
+                {
+                    Handle(command as AddProductsCommand);
+                }
+                else if (command.GetType() == typeof(UpdateProductsCommand))
+                {
+                    Handle(command as UpdateProductsCommand);
+                }
 
-            else if (command.GetType() == typeof(UpdateProductCommand))
+                else if (command.GetType() == typeof(UpdateProductCommand))
+                {
+                    Handle(command as UpdateProductCommand);
+                }
+            }
+            catch (Exception ex)
             {
-                Handle(command as UpdateProductCommand);
+                commandResult.WasCommandSuccessfull = false;
+                throw;
+            }
+            finally
+            {
+                _eventContextDal.Value.AddEntity(commandResult);
+                _eventContextDal.Value.Save();
             }
         }
     }

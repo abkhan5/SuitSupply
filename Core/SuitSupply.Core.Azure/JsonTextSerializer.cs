@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Formatting = System.Xml.Formatting;
 
 namespace SuitSupply.Core.Azure
 {
-    public class JsonTextSerializer 
+    public class JsonTextSerializer
     {
         private readonly JsonSerializer _serializer;
 
@@ -34,7 +28,7 @@ namespace SuitSupply.Core.Azure
         public void Serialize(TextWriter writer, object graph)
         {
             var jsonWriter = new JsonTextWriter(writer);
-            jsonWriter.Formatting = Newtonsoft.Json.Formatting.Indented;
+            jsonWriter.Formatting = Formatting.Indented;
 
             _serializer.Serialize(jsonWriter, graph);
 
