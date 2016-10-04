@@ -18,6 +18,9 @@ namespace SuitSupply.DataObject
 
         public IEnumerable<byte[]> ProductImages { get; set; }
 
+        public byte[] RecordVersion { get; set; }
+
+
         public override string ToString()
         {
             var message= "Product Name = "+ProductName+" Product Code = "+ProductCode+" with ID "+Id;

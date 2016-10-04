@@ -31,10 +31,19 @@ namespace SuitSupply.Core.Azure
         public void ProcessCommand(ICommand command)
         {
             var name = command.GetType().Name;
-            Console.WriteLine("Received command " + name);
-            var handler = _commandHandlers[name];
-            CastedHandler(handler, command);
-            Console.WriteLine("Command " + name + " handled");
+            try
+            {
+                Console.WriteLine("Received command " + name);
+                var handler = _commandHandlers[name];
+                CastedHandler(handler, command);
+                Console.WriteLine("Command " + name + " handled");
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Command " + name + " failed");
+                throw;
+            }
         }
 
         private string GetCommandName<T>(ICommandHandler<T> commandHandler) where T : ICommand

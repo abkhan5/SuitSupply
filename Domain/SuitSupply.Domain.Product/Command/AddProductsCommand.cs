@@ -20,6 +20,6 @@ namespace SuitSupply.Domain.Product.Command
             get; set;
         }
 
-        public IEnumerable<object> ProductsDto { get; set; }
+        public IEnumerable<Entities.Product> ProductDetails { get; set; }
     }
 }

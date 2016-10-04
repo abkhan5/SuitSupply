@@ -57,7 +57,7 @@ namespace SuitSupply.Core.DataAccess
             if (entry.State == EntityState.Detached)
             {
                 entry.State = EntityState.Modified;
-                Set<T>().Add(entity);
+                Set<T>().Attach(entity);
             }
         }
 

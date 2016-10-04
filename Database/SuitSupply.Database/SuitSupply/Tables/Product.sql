@@ -4,6 +4,5 @@
     [CreatedOn] DATETIME NOT NULL, 
     [ProductCode] INT NOT NULL, 
     [RecordVersion] TIMESTAMP NOT NULL, 
-    [ProductName] NVARCHAR(50) NOT NULL, 
-    CONSTRAINT [AK_Product_ProductCode] UNIQUE ([ProductCode]) 
+    [ProductName] NVARCHAR(50) NOT NULL 
 )

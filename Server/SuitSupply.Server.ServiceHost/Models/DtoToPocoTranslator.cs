@@ -14,26 +14,30 @@ namespace SuitSupply.Server.ServiceHost.Models
             }
         }
 
-        public static ProductDto ProductPocoToDto(this Product product)
+        public static ProductDto ProductPocoToDto(this Product @from)
         {
-            ProductDto model = new ProductDto();
-            model.Id = product.Id;
-            model.CreatedOn = product.CreatedOn;
-            model.ProductCode = product.ProductCode;
-            model.ProductName = product.ProductName;
-            if (product.ProductPhotos != null)
+            ProductDto product = new ProductDto();
+            product.Id = @from.Id;
+            product.CreatedOn = @from.CreatedOn;
+            product.ProductCode = @from.ProductCode;
+            product.ProductName = @from.ProductName;
+            product.RecordVersion = @from.RecordVersion;
+            product.Id = @from.Id;
+            if (@from.ProductPhotos != null)
             {
-                model.ProductImages = product.ProductPhotos.Select(item => item.ProductImage).ToList();
+                product.ProductImages = @from.ProductPhotos.Select(item => item.ProductImage).ToList();
             }
-            return model;
+            return product;
         }
        
         public static Product ProductDtoToPoco(this ProductDto from)
         {
             var product= new Product();
+            product.Id = from.Id;
             product.CreatedOn = from.CreatedOn;
             product.ProductName = from.ProductName;
             product.ProductCode = from.ProductCode;
+            product.RecordVersion = from.RecordVersion;
 
             foreach (var fromProductImage in from.ProductImages)
             {

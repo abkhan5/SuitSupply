@@ -41,6 +41,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.Server.ServiceHost", "Server\SuitSupply.Server.ServiceHost\SuitSupply.Server.ServiceHost.csproj", "{D3356E62-BFD4-4F01-B35F-AC4E96405708}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.Core.Azure", "Core\SuitSupply.Core.Azure\SuitSupply.Core.Azure.csproj", "{E37A8E95-1511-466F-8A59-27CC6747470B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8FE7E2C-24B0-4BE1-822A-EE4A5AF3E7A5} = {E8FE7E2C-24B0-4BE1-822A-EE4A5AF3E7A5}
+	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SuitSupply.Database", "Database\SuitSupply.Database\SuitSupply.Database.sqlproj", "{30D49B83-9481-427B-8670-815C6C705DA6}"
 EndProject

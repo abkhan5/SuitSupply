@@ -46,9 +46,24 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         // GET api/<controller>/5
 
 
+
+        // PUT api/<controller>
+        [HttpPut]
+        public void Put(ProductDto productDto)
+        {
+            var product = productDto.ProductDtoToPoco();
+            var command = new UpdateProductCommand() { ProductDto = product };
+            _bus.Send(command);
+            var commandResult = WaitUntilAvailable(command.Id.ToString());
+            if (commandResult)
+            {
+             throw   new Exception("Update failed");
+            }
+
+        }
+
         // POST api/<controller>
         [HttpPost]
-        //[ActionName("AddProduct")]
         public string Post(ProductDto productDto)
         {
             var product = productDto.ProductDtoToPoco();

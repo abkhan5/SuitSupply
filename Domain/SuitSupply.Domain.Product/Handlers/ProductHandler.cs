@@ -24,17 +24,19 @@ namespace SuitSupply.Domain.Product.Handlers
 
         public void Handle(UpdateProductsCommand command)
         {
-            var products = command.ProductsDto;
+            var products = command.ProductDetails;
             foreach (var product in products)
             {
+                product.ProductPhotos.Clear();
                 _dataAccess.Value.Update(product);
+
             }
             _dataAccess.Value.Save();
         }
 
         public void Handle(AddProductsCommand command)
         {
-            var products = command.ProductsDto;
+            var products = command.ProductDetails;
             foreach (var product in products)
             {
                 _dataAccess.Value.AddEntity(product);
@@ -45,12 +47,15 @@ namespace SuitSupply.Domain.Product.Handlers
         public void Handle(UpdateProductCommand command)
         {
             var product = command.ProductDto;
+            product.ProductPhotos.Clear();
             _dataAccess.Value.Update(product);
+            _dataAccess.Value.Save();
         }
 
         public void Handle(AddProductCommand command)
         {
             var product = command.ProductDetails;
+
             _dataAccess.Value.AddEntity(product);
             _dataAccess.Value.Save();
         }

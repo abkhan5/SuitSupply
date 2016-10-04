@@ -34,6 +34,10 @@ namespace SuitSupply.Client
                         case 2:
                             productTask = client.PostProduct();
                             break;
+                        case 3:
+                            productTask = client.UpdateProduct();
+                            break;
+
                     }
                     productTask.Wait();
                 }
@@ -48,6 +52,7 @@ namespace SuitSupply.Client
         {
             Console.WriteLine("1. All Products");
             Console.WriteLine("2. Add Product");
+            Console.WriteLine("3. Update Product");
             var resp = Console.ReadLine();
             if (string.IsNullOrEmpty(resp))
             {
