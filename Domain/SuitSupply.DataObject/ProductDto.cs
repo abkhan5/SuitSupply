@@ -1,9 +1,11 @@
 ﻿#region Namespace
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 #endregion
+
 namespace SuitSupply.DataObject
 {
     public class ProductDto
@@ -23,14 +25,11 @@ namespace SuitSupply.DataObject
 
         public override string ToString()
         {
-            var message= "Product Name = "+ProductName+" Product Code = "+ProductCode+" with ID "+Id;
-            if (ProductImages!=null && ProductImages.Any())
-            {
+            var message = "Product Name = " + ProductName + " Product Code = " + ProductCode + " with ID " + Id;
+            if ((ProductImages != null) && ProductImages.Any())
                 message += " Total Photos " + ProductImages.Count();
-            }
 
             return message;
         }
     }
-
 }

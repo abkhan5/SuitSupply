@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Practices.Unity;
 using SuitSupply.Domain.Product.ReadModel;
 
 namespace SuitSupply.Domain.Product.Test

@@ -1,25 +1,22 @@
 ﻿#region Namespace
-using SuitSupply.Core.Messaging;
+
 using System;
 using System.Collections.Generic;
+using SuitSupply.Core.Messaging;
 
 #endregion
 
 namespace SuitSupply.Domain.Product.Command
 {
-    
-     public class UpdateProductsCommand : ICommand
+    public class UpdateProductsCommand : ICommand
     {
         public UpdateProductsCommand()
         {
             Id = Guid.NewGuid();
         }
 
-        public Guid Id
-        {
-            get; set;
-        }
-
         public IEnumerable<Entities.Product> ProductDetails { get; set; }
+
+        public Guid Id { get; set; }
     }
 }

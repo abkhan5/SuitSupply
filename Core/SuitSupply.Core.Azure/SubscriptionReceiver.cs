@@ -13,11 +13,11 @@ namespace SuitSupply.Core.Azure
     {
         private readonly CancellationTokenSource _cancellationSource;
         private readonly SubscriptionClient _client;
+        private readonly ICommandHandlerRegistery _handler;
         private readonly object _lockObject = new object();
         private readonly string _subscription;
         private readonly TokenProvider _tokenProvider;
         private readonly string _topic;
-        private readonly ICommandHandlerRegistery _handler;
 
         public SubscriptionReceiver(string topic, string subscription, string tokenIssuer, string tokenAccessKey,
             string serviceUriScheme, string serviceNamespace, string servicePath,

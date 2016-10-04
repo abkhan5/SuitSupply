@@ -1,21 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using SuitSupply.Core.Extensions;
 
 namespace SuitSupply.Domain.Product.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
     [Table("SuitSupply.Product")]
-    public partial class Product
+    public class Product
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
             ProductPhotos = new HashSet<ProductPhoto>();
-            CreatedOn=DateTime.Now.ToUtcTime();
+            CreatedOn = DateTime.Now.ToUtcTime();
         }
 
         public int Id { get; set; }
@@ -33,7 +32,7 @@ namespace SuitSupply.Domain.Product.Entities
         [StringLength(50)]
         public string ProductName { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductPhoto> ProductPhotos { get; set; }
     }
 }

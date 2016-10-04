@@ -1,6 +1,5 @@
 ﻿#region Namespace
 
-using System;
 using Microsoft.Practices.Unity;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
@@ -10,11 +9,11 @@ using SuitSupply.Domain.Product.ReadModel;
 using SuitSupply.Domain.Product.ReadModel.Implementation;
 
 #endregion
+
 namespace SuitSupply.Domain.Product
 {
     public class ProductDomain
     {
-        
         public ProductDomain(IUnityContainer container)
         {
             RegisterDatabase(container);
@@ -25,7 +24,7 @@ namespace SuitSupply.Domain.Product
         {
             container.RegisterType<IUnitOfWork, ProductDatabase>
             (new TransientLifetimeManager(),
-             new InjectionConstructor(DataAccessConstants.SuitConnectionString));
+                new InjectionConstructor(DataAccessConstants.SuitConnectionString));
 
             container.RegisterType<IProductDao, ProductDao>();
         }
@@ -33,10 +32,8 @@ namespace SuitSupply.Domain.Product
         private void RegisterCommand(IUnityContainer container)
         {
             container.RegisterType<ICommandHandler, ProductHandler>
-                (ProductDomainConstant.ProductCommandHandler
-                
-                
-                );
+            (ProductDomainConstant.ProductCommandHandler
+            );
         }
     }
 }

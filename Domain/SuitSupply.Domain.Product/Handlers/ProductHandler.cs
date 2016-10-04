@@ -1,10 +1,12 @@
 ﻿#region Namespace
+
 using System;
+using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.Product.Command;
-using SuitSupply.Core.DataAccess;
 
 #endregion
+
 namespace SuitSupply.Domain.Product.Handlers
 {
     public class ProductHandler :
@@ -13,44 +15,27 @@ namespace SuitSupply.Domain.Product.Handlers
         ICommandHandler<UpdateProductCommand>,
         ICommandHandler<UpdateProductsCommand>
     {
-        private readonly Lazy<IUnitOfWork> _dataAccess;
 
+        #region Private members
+
+        private Lazy<IUnitOfWork> _dataAccess;
+        private readonly Func<IUnitOfWork> _dataAccessInstanceMethod;
         private readonly Lazy<IUnitOfWork> _eventContextDal;
-        public ProductHandler(Func<IUnitOfWork> dataAccessInstanceMethod,Func<IUnitOfWork> eventContextDal)
+
+        #endregion
+
+        #region Constructor
+
+        public ProductHandler(Func<IUnitOfWork> dataAccessInstanceMethod, Func<IUnitOfWork> eventContextDal)
         {
+            _dataAccessInstanceMethod = dataAccessInstanceMethod;
             _eventContextDal = new Lazy<IUnitOfWork>(eventContextDal);
-            _dataAccess = new Lazy<IUnitOfWork>(dataAccessInstanceMethod);
+            _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);
         }
 
-        public void Handle(UpdateProductsCommand command)
-        {
-            var products = command.ProductDetails;
-            foreach (var product in products)
-            {
-                product.ProductPhotos.Clear();
-                _dataAccess.Value.Update(product);
+        #endregion
 
-            }
-            _dataAccess.Value.Save();
-        }
-
-        public void Handle(AddProductsCommand command)
-        {
-            var products = command.ProductDetails;
-            foreach (var product in products)
-            {
-                _dataAccess.Value.AddEntity(product);
-            }
-            _dataAccess.Value.Save();
-        }
-
-        public void Handle(UpdateProductCommand command)
-        {
-            var product = command.ProductDto;
-            product.ProductPhotos.Clear();
-            _dataAccess.Value.Update(product);
-            _dataAccess.Value.Save();
-        }
+        #region Public Methods
 
         public void Handle(AddProductCommand command)
         {
@@ -62,29 +47,22 @@ namespace SuitSupply.Domain.Product.Handlers
 
         public void Handle(ICommand command)
         {
-            var commandResult= new Event();
-            commandResult.CommandId= command.Id.ToString();
-            commandResult.Payload = command.GetType().Name;
-            commandResult.WasCommandSuccessfull = true;
+            var commandResult = new Event
+            {
+                CommandId = command.Id.ToString(),
+                Payload = command.GetType().Name,
+                WasCommandSuccessfull = true
+            };
             try
             {
                 if (command.GetType() == typeof(AddProductCommand))
-                {
                     Handle(command as AddProductCommand);
-                }
                 else if (command.GetType() == typeof(AddProductsCommand))
-                {
                     Handle(command as AddProductsCommand);
-                }
                 else if (command.GetType() == typeof(UpdateProductsCommand))
-                {
                     Handle(command as UpdateProductsCommand);
-                }
-
                 else if (command.GetType() == typeof(UpdateProductCommand))
-                {
                     Handle(command as UpdateProductCommand);
-                }
             }
             catch (Exception ex)
             {
@@ -93,9 +71,40 @@ namespace SuitSupply.Domain.Product.Handlers
             }
             finally
             {
+                _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);
+
                 _eventContextDal.Value.AddEntity(commandResult);
                 _eventContextDal.Value.Save();
             }
         }
+
+        public void Handle(AddProductsCommand command)
+        {
+            var products = command.ProductDetails;
+            foreach (var product in products)
+                _dataAccess.Value.AddEntity(product);
+            _dataAccess.Value.Save();
+        }
+
+        public void Handle(UpdateProductCommand command)
+        {
+            var product = command.ProductDto;
+            product.ProductPhotos.Clear();
+            _dataAccess.Value.Update(product);
+            _dataAccess.Value.Save();
+        }
+
+        public void Handle(UpdateProductsCommand command)
+        {
+            var products = command.ProductDetails;
+            foreach (var product in products)
+            {
+                product.ProductPhotos.Clear();
+                _dataAccess.Value.Update(product);
+            }
+            _dataAccess.Value.Save();
+        }
+
+        #endregion
     }
 }

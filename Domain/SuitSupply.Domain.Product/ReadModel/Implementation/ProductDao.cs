@@ -1,19 +1,20 @@
 ﻿#region Namespace
-using SuitSupply.Core.DataAccess;
-using System;
+
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using SuitSupply.Core.DataAccess;
 
 #endregion
+
 namespace SuitSupply.Domain.Product.ReadModel.Implementation
 {
     public class ProductDao : IProductDao
     {
-        private IUnitOfWork  _dataAccess;
+        private readonly IUnitOfWork _dataAccess;
 
 
-        public ProductDao( IUnitOfWork dataAccess)
+        public ProductDao(IUnitOfWork dataAccess)
         {
             _dataAccess = dataAccess;
         }
@@ -21,20 +22,13 @@ namespace SuitSupply.Domain.Product.ReadModel.Implementation
         public IEnumerable<Entities.Product> GetProducts()
         {
             var products = ProductQuery();
-                return products;
-        }
-
-        private IQueryable<Entities.Product> ProductQuery()
-        {
-            var products = _dataAccess.Query<Entities.Product>().
-                Include(item => item.ProductPhotos);
             return products;
         }
 
         public Entities.Product GetProduct(int productId)
         {
             var product = ProductQuery().
-                FirstOrDefault(item=> item.Id== productId);
+                FirstOrDefault(item => item.Id == productId);
             return product;
         }
 
@@ -44,11 +38,17 @@ namespace SuitSupply.Domain.Product.ReadModel.Implementation
             _dataAccess.Save();
         }
 
-        public  void UpdateProduct(Entities.Product product)
+        public void UpdateProduct(Entities.Product product)
         {
             _dataAccess.Update(product);
             _dataAccess.Save();
+        }
 
+        private IQueryable<Entities.Product> ProductQuery()
+        {
+            var products = _dataAccess.Query<Entities.Product>().
+                Include(item => item.ProductPhotos);
+            return products;
         }
     }
 }

@@ -55,10 +55,10 @@ namespace SuitSupply.Server.ServiceHost.Controllers
             var command = new UpdateProductCommand() { ProductDto = product };
             _bus.Send(command);
             var commandResult = WaitUntilAvailable(command.Id.ToString());
-            if (commandResult)
-            {
-             throw   new Exception("Update failed");
-            }
+            //if (commandResult)
+            //{
+            // throw   new Exception("Update failed");
+            //}
 
         }
 

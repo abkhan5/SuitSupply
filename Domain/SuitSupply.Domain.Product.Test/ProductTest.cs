@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
+﻿using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuitSupply.Core.Extensions;
-using SuitSupply.Domain.Product.Entities;
 using SuitSupply.Domain.Product.ReadModel;
 
 namespace SuitSupply.Domain.Product.Test
@@ -38,7 +32,7 @@ namespace SuitSupply.Domain.Product.Test
             var product = ProductData.GetProduct();
             var pd = container.Resolve<IProductDao>();
             pd.AddProduct(product);
-            Assert.IsTrue(product.Id!=0);
+            Assert.IsTrue(product.Id != 0);
         }
 
 
@@ -48,8 +42,8 @@ namespace SuitSupply.Domain.Product.Test
             container.RegisterInstance(container);
             container.Resolve<ProductDomain>();
             return container;
-
         }
+
         [TestMethod]
         public void UpdateProductTest()
         {
@@ -58,9 +52,15 @@ namespace SuitSupply.Domain.Product.Test
             var dal = container.Resolve<IProductDao>();
             dal.AddProduct(oldProduct);
             Assert.IsTrue(oldProduct.Id != 0);
+
             dal = container.Resolve<IProductDao>();
             var product = dal.GetProduct(oldProduct.Id);
             product.ProductName = "Romeo";
+
+            dal = container.Resolve<IProductDao>();
+            dal.UpdateProduct(product);
+
+            product.ProductName = "Rome";
             dal.UpdateProduct(product);
 
             container = InitializeContainer();
@@ -68,44 +68,40 @@ namespace SuitSupply.Domain.Product.Test
             dal = container.Resolve<IProductDao>();
             product = dal.GetProduct(oldProduct.Id);
 
-            Assert.AreNotEqual(oldProduct.ProductName,product.ProductName);
+            Assert.AreNotEqual(oldProduct.ProductName, product.ProductName);
         }
 
 
         [TestMethod]
-        [ExpectedException(typeof(DbUpdateException))]
+        [ExpectedException(typeof(DbUpdateConcurrencyException))]
         public void UpdateProductFailedTest()
         {
-            var container = new UnityContainer();
-            container.RegisterInstance(container);
-            container.Resolve<ProductDomain>();
+            var container = InitializeContainer();
             var oldProduct = ProductData.GetProduct();
             var dal = container.Resolve<IProductDao>();
             dal.AddProduct(oldProduct);
             Assert.IsTrue(oldProduct.Id != 0);
             dal = container.Resolve<IProductDao>();
             var product = dal.GetProduct(oldProduct.Id);
-            product.ProductName = "Romeo";
+            product.ProductName = "Rome";
             dal.UpdateProduct(product);
-            dal = container.Resolve<IProductDao>();
-            product = dal.GetProduct(oldProduct.Id);
-
             Assert.AreNotEqual(oldProduct.ProductName, product.ProductName);
+
+            container = InitializeContainer();
+
             dal = container.Resolve<IProductDao>();
             dal.UpdateProduct(oldProduct);
         }
-        [TestMethod]
 
+        [TestMethod]
         public void GetProductTest()
         {
             var container = new UnityContainer();
             container.RegisterInstance(container);
             container.Resolve<ProductDomain>();
             var pd = container.Resolve<IProductDao>();
-            var products= pd.GetProducts().ToList();
-            Assert.IsTrue(products!=null);
+            var products = pd.GetProducts().ToList();
+            Assert.IsTrue(products != null);
         }
-
     }
-
 }

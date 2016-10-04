@@ -1,4 +1,6 @@
-﻿namespace SuitSupply.Core.Messaging
+﻿using System;
+
+namespace SuitSupply.Core.Messaging
 {
     public interface ICommandHandlerRegistery
     {

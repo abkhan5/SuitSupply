@@ -13,6 +13,8 @@ namespace SuitSupply.Core.DataAccess
     {
         public DbContextBase(string connectionString) : base(connectionString)
         {
+            this.Configuration.ProxyCreationEnabled = false;
+
         }
 
         public IQueryable<T> Query<T>() where T : class
@@ -35,30 +37,12 @@ namespace SuitSupply.Core.DataAccess
 
         public void Save()
         {
-            try
-            {
-                SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw new Exception(" Concurrency exception. Record has already been udpated");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            
+            SaveChanges();
         }
 
         public void Update<T>(T entity) where T : class
         {
-            var entry = Entry(entity);
-
-            if (entry.State == EntityState.Detached)
-            {
-                entry.State = EntityState.Modified;
-                Set<T>().Attach(entity);
-            }
+            this.Entry(entity).State = EntityState.Modified;
         }
 
         protected abstract void OnModelCreation(DbModelBuilder modelBuilder);

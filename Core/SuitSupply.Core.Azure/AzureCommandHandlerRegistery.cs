@@ -11,13 +11,14 @@ namespace SuitSupply.Core.Azure
 
         public AzureCommandHandlerRegistery()
         {
-            _commandHandlers = new Dictionary<string, ICommandHandler>();
+            _commandHandlers = new Dictionary<string, ICommandHandler> ();
         }
 
         public void Registery(ICommandHandler commandHandler)
         {
             var genericHandler = typeof(ICommandHandler<>);
-            var supportedCommandTypes = commandHandler.GetType()
+            var supportedCommandTypes = commandHandler
+                .GetType()
                 .GetInterfaces()
                 .Where(iface => iface.IsGenericType && (iface.GetGenericTypeDefinition() == genericHandler))
                 .Select(iface => iface.GetGenericArguments()[0])
@@ -25,7 +26,9 @@ namespace SuitSupply.Core.Azure
 
             // Register this handler for each of he handled types.
             foreach (var commandType in supportedCommandTypes)
+            {
                 _commandHandlers.Add(commandType.Name, commandHandler);
+            }
         }
 
         public void ProcessCommand(ICommand command)
@@ -37,7 +40,6 @@ namespace SuitSupply.Core.Azure
                 var handler = _commandHandlers[name];
                 CastedHandler(handler, command);
                 Console.WriteLine("Command " + name + " handled");
-
             }
             catch (Exception)
             {
@@ -57,9 +59,13 @@ namespace SuitSupply.Core.Azure
         {
             var castedHandler = handler as ICommandHandler<T>;
             if (castedHandler != null)
+            {
                 castedHandler.Handle(command);
+            }
             else
+            {
                 handler.Handle(command);
+            }
         }
     }
 }

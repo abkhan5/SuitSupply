@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
 using SuitSupply.DataObject;
 
 namespace SuitSupply.Client
@@ -18,8 +15,7 @@ namespace SuitSupply.Client
         }
         private void InitializeClient()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(AzureServicePath);
+            _client = new HttpClient {BaseAddress = new Uri(ServicePath) };
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
          }

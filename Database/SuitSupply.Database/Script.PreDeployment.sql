@@ -8,7 +8,7 @@
  Example:      :setvar TableName MyTable							
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
-*/
-Delete SuitSupply.ProductPhotos
-Delete SuitSupply.Product
-Delete SuitSupply.Event
+--*/
+--Delete SuitSupply.ProductPhotos
+--Delete SuitSupply.Product
+--Delete SuitSupply.Event
