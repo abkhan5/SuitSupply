@@ -14,8 +14,8 @@ namespace SuitSupply.Client
         {
             Random random=new Random();
             ProductDto product= new ProductDto();
-            product.ProductName = "Cola"+ random.Next(2);
-            product.ProductCode = random.Next(99999);
+            product.ProductName = "Cola"+ random.Next(999);
+            product.ProductCode = random.Next();
             product.CreatedOn=DateTime.Now;
             var productImages= new List<byte[]>();
             productImages.Add(ImageExtensions.LoadImageToByte(null, "car2.jpg"));

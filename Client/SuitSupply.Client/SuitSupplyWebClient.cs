@@ -97,10 +97,6 @@ namespace SuitSupply.Client
 
         //    Console.ReadLine();
         //}
-         void ShowProduct(ProductDto product)
-        {
-            Console.WriteLine($"Name: {product.ProductName}");
-        }
-
+       
     }
 }

@@ -20,7 +20,7 @@ namespace SuitSupply.DataObject
 
         public override string ToString()
         {
-            var message= "Product Name = "+ProductName+" with ID "+Id;
+            var message= "Product Name = "+ProductName+" Product Code = "+ProductCode+" with ID "+Id;
             if (ProductImages!=null && ProductImages.Any())
             {
                 message += " Total Photos " + ProductImages.Count();

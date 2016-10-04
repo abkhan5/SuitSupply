@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,17 +47,43 @@ namespace SuitSupply.Domain.Product.Test
             var container = new UnityContainer();
             container.RegisterInstance(container);
             container.Resolve<ProductDomain>();
-            var product = ProductData.GetProduct();
-            var pd = container.Resolve<IProductDao>();
-            pd.AddProduct(product);
-            Assert.IsTrue(product.Id != 0);
-            pd = container.Resolve<IProductDao>();
-            var productId = product.Id;
-            product = pd.GetProduct(product.Id);
+            var oldProduct = ProductData.GetProduct();
+            var dal = container.Resolve<IProductDao>();
+            dal.AddProduct(oldProduct);
+            Assert.IsTrue(oldProduct.Id != 0);
+            dal = container.Resolve<IProductDao>();
+            var product = dal.GetProduct(oldProduct.Id);
             product.ProductName = "Romeo";
-            pd.UpdateProduct(product);
+            dal.UpdateProduct(product);
+            dal = container.Resolve<IProductDao>();
+            product = dal.GetProduct(oldProduct.Id);
+
+            Assert.AreNotEqual(oldProduct.ProductName,product.ProductName);
         }
 
+
+        [TestMethod]
+        [ExpectedException(typeof(DbUpdateException))]
+        public void UpdateProductFailedTest()
+        {
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            container.Resolve<ProductDomain>();
+            var oldProduct = ProductData.GetProduct();
+            var dal = container.Resolve<IProductDao>();
+            dal.AddProduct(oldProduct);
+            Assert.IsTrue(oldProduct.Id != 0);
+            dal = container.Resolve<IProductDao>();
+            var product = dal.GetProduct(oldProduct.Id);
+            product.ProductName = "Romeo";
+            dal.UpdateProduct(product);
+            dal = container.Resolve<IProductDao>();
+            product = dal.GetProduct(oldProduct.Id);
+
+            Assert.AreNotEqual(oldProduct.ProductName, product.ProductName);
+            dal = container.Resolve<IProductDao>();
+            dal.UpdateProduct(oldProduct);
+        }
         [TestMethod]
 
         public void GetProductTest()
