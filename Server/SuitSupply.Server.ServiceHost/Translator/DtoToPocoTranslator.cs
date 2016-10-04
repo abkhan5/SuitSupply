@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#region Namespace
+using System.Collections.Generic;
 using System.Linq;
 using SuitSupply.Domain.Product.Entities;
 using SuitSupply.DataObject;
-namespace SuitSupply.Server.ServiceHost.Models
+#endregion
+
+namespace SuitSupply.Server.ServiceHost.Translator
 {
     public static class DtoToPocoTranslator
     {

@@ -12,7 +12,7 @@ using SuitSupply.Core.Messaging;
 using SuitSupply.DataObject;
 using SuitSupply.Domain.Product.Command;
 using SuitSupply.Domain.Product.ReadModel;
-using SuitSupply.Server.ServiceHost.Models;
+using SuitSupply.Server.ServiceHost.Translator;
 
 #endregion
 namespace SuitSupply.Server.ServiceHost.Controllers

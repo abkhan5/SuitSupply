@@ -15,7 +15,7 @@ namespace SuitSupply.Client
         }
         private void InitializeClient()
         {
-            _client = new HttpClient {BaseAddress = new Uri(ServicePath) };
+            _client = new HttpClient {BaseAddress = new Uri(AzureServicePath) };
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
          }
@@ -136,45 +136,5 @@ namespace SuitSupply.Client
 
 
         #endregion
-        //async Task RunAsync()
-        //{
-        //    client.BaseAddress = new Uri(ServicePath);
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    try
-        //    {
-        //        // Create a new product
-        //        ProductDto product = new ProductDto { ProductName = "Gizmo" };
-
-        //        var url = await CreateProductAsync(product);
-        //        Console.WriteLine($"Created at {url}");
-
-        //        // Get the product
-        //        product = await GetProductAsync(url.PathAndQuery);
-        //        ShowProduct(product);
-
-        //        // Update the product
-        //        Console.WriteLine("Updating price...");
-        //        product.Price = 80;
-        //        await UpdateProductAsync(product);
-
-        //        // Get the updated product
-        //        product = await GetProductAsync(url.PathAndQuery);
-        //        ShowProduct(product);
-
-        //        // Delete the product
-        //        var statusCode = await DeleteProductAsync(product.Id);
-        //        Console.WriteLine($"Deleted (HTTP Status = {(int)statusCode})");
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    }
-
-        //    Console.ReadLine();
-        //}
-
     }
 }
