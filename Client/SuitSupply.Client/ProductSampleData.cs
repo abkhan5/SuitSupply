@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SuitSupply.Core.Extensions;
-using SuitSupply.DataObject;
+using SuitSupply.DataContracts;
 
-namespace SuitSupply.Client
+namespace SuitSupply.ClientCommon
 {
-    static class ProductSampleData
+    public static class ProductSampleData
     {
         public static ProductDto GetSampleDto()
         {
-            Random random=new Random();
-            ProductDto product= new ProductDto();
-            product.ProductName = "Cola"+ random.Next(999);
+            var random = new Random();
+            var product = new ProductDto();
+            product.ProductName = "Cola" + random.Next(999);
             product.ProductCode = random.Next();
-            product.CreatedOn=DateTime.Now;
-            var productImages= new List<byte[]>();
-            productImages.Add(ImageExtensions.LoadImageToByte(null, "car2.jpg"));
+            product.CreatedOn = DateTime.Now;
+            var productImages = new List<byte[]>();
             product.ProductImages = productImages;
             return product;
         }
     }
+
 }

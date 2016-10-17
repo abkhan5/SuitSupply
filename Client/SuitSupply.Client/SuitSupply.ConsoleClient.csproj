@@ -7,11 +7,12 @@
     <ProjectGuid>{A52AD950-B7FA-484A-A8A9-BA88A6FD4EFE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuitSupply.Client</RootNamespace>
-    <AssemblyName>SuitSupply.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>SuitSupply.ConsoleClient</RootNamespace>
+    <AssemblyName>SuitSupply.ConsoleClient</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,7 +55,7 @@
     <Compile Include="ProductSampleData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SuitSupplyWebClient.cs" />
+    <Compile Include="SuitSupplyClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -65,9 +66,9 @@
       <Project>{e8fe7e2c-24b0-4be1-822a-ee4a5af3e7a5}</Project>
       <Name>SuitSupply.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Domain\SuitSupply.DataObject\SuitSupply.DataObject.csproj">
-      <Project>{db19d03c-0058-42c5-9aef-f606d24265a2}</Project>
-      <Name>SuitSupply.DataObject</Name>
+    <ProjectReference Include="..\..\Domain\SuitSupply.DataContracts\SuitSupply.DataContracts.csproj">
+      <Project>{36b4a66e-c339-49a7-b0c8-407879838451}</Project>
+      <Name>SuitSupply.DataContracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

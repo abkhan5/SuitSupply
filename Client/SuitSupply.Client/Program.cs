@@ -1,31 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using SuitSupply.DataObject;
+using SuitSupply.ClientCommon;
 
-namespace SuitSupply.Client
+namespace SuitSupply.ConsoleClient
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var runMoreCommand = true;
             while (runMoreCommand)
             {
-                var option= PrintOptions();
-                if (option==0)
-                {
+                var option = PrintOptions();
+                if (option == 0)
                     break;
-                }
 
                 try
                 {
-                    var client = new SuitSupplyWebClient();
-                    Task productTask = new Task(() => { });
+                    var client = new SuitSupplyClient();
+                    var productTask = new Task(() => { });
                     switch (option)
                     {
                         case 1:
@@ -37,30 +30,26 @@ namespace SuitSupply.Client
                         case 3:
                             productTask = client.UpdateProduct();
                             break;
-
                     }
                     productTask.Wait();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(" Failure : "+ex);
-                }  
+                    Console.WriteLine(" Failure : " + ex);
+                }
             }
         }
 
-      static int PrintOptions()
+        private static int PrintOptions()
         {
             Console.WriteLine("1. All Products");
             Console.WriteLine("2. Add Product");
             Console.WriteLine("3. Update Product");
             var resp = Console.ReadLine();
             if (string.IsNullOrEmpty(resp))
-            {
                 return 0;
-            }
             var option = int.Parse(resp);
             return option;
         }
-      
     }
 }
