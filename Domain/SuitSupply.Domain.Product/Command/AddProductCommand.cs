@@ -11,11 +11,11 @@ namespace SuitSupply.Domain.Product.Command
     {
         public AddProductCommand()
         {
-            Id = Guid.NewGuid();
+            ID = Guid.NewGuid();
         }
 
         public Entities.Product ProductDetails { get; set; }
 
-        public Guid Id { get; set; }
+        public Guid ID { get; set; }
     }
 }

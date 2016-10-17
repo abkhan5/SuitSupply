@@ -64,7 +64,11 @@ namespace SuitSupply.Core.Azure
             }
             else
             {
-                handler.Handle(command);
+                lock (this)
+                {
+                    handler.Handle(command);
+
+                }
             }
         }
     }

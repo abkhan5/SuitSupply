@@ -4,6 +4,7 @@ using SuitSupply.Core;
 using SuitSupply.Core.Azure;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
+using SuitSupply.Domain.MittoSms;
 using SuitSupply.Domain.Product;
 using Unity.WebApi;
 
@@ -19,16 +20,22 @@ namespace SuitSupply.Server.ServiceHost
             (Constants.EventContextName,
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(DataAccessConstants.SuitConnectionString));
-            container.Resolve<ProductDomain>();
+            RegisterDomains(container);
             RegisterBusComponents(container);
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+        }
+
+        private static void RegisterDomains(IUnityContainer container)
+        {
+            container.Resolve<ProductDomain>();
+            container.Resolve<MittoSmsDomain>();
         }
 
         private static void RegisterBusComponents(IUnityContainer container)
         {
             var commandBus = new AzureCommandBus(
                 new TopicSender(
-                    AzureConstants.Topic, AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
+                    AzureConstants.SuitTopic, AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
                     AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
                     AzureConstants.ServicePath));
             container.RegisterInstance<ICommandBus>(commandBus);

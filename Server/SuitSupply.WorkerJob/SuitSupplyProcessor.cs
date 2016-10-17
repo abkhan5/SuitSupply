@@ -44,26 +44,45 @@ namespace SuitSupply.WorkerJob
             foreach (var prodHandler in prodHandlers)
                 handlerRegistery.Registery(prodHandler);
 
-            var subscriber = new SubscriptionReceiver(
-                AzureConstants.Topic, AzureConstants.AddProductSubscriber,
+            //var productSubscriber = new SubscriptionReceiver(
+            //    AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddProduct,
+            //    AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
+            //    AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
+            //    AzureConstants.ServicePath, handlerRegistery);
+            container.
+                RegisterType<IMessageReceiver,SubscriptionReceiver>("ProductSubs",
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddProduct,
                 AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
                 AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
-                AzureConstants.ServicePath, handlerRegistery);
-            container.RegisterInstance(subscriber);
-            //container.RegisterType<IMessageReceiver, SubscriptionReceiver>("AddProductSubscriber");
-            //var sub=container.Resolve<IMessageReceiver>("AddProductSubscriber");
+                AzureConstants.ServicePath, handlerRegistery));
+
+            container.
+                RegisterType<IMessageReceiver, SubscriptionReceiver>("SmsSubs",
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddNumber,
+                AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
+                AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
+                AzureConstants.ServicePath, handlerRegistery));
         }
 
         public void Start()
         {
-            var subscriber = _container.Resolve<SubscriptionReceiver>();
-            subscriber.Start();
+            var subscribers = _container.ResolveAll<IMessageReceiver>();
+            foreach (var subscriber in subscribers)
+            {
+                subscriber.Start();
+            }
+
         }
 
         public void Stop()
         {
-            var subscriber = _container.Resolve<SubscriptionReceiver>();
-            subscriber.Stop();
+            var subscribers = _container.ResolveAll<IMessageReceiver>();
+            foreach (var subscriber in subscribers)
+            {
+                subscriber.Stop();
+            }
         }
     }
 }

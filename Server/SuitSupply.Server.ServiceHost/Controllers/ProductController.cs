@@ -54,7 +54,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
             var product = productDto.ProductDtoToPoco();
             var command = new UpdateProductCommand {ProductDto = product};
             _bus.Send(command);
-            var commandResult = WaitUntilAvailable(command.Id.ToString());
+            var commandResult = WaitUntilAvailable(command.ID.ToString());
             //if (commandResult)
             //{
             // throw   new Exception("Update failed");
@@ -68,7 +68,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
             var product = productDto.ProductDtoToPoco();
             var command = new AddProductCommand {ProductDetails = product};
             _bus.Send(command);
-            var commandResult = WaitUntilAvailable(command.Id.ToString());
+            var commandResult = WaitUntilAvailable(command.ID.ToString());
             return commandResult ? "Success" : "Failed";
         }
 

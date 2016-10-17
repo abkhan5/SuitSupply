@@ -194,6 +194,10 @@
       <Project>{36b4a66e-c339-49a7-b0c8-407879838451}</Project>
       <Name>SuitSupply.DataContracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Domain\SuitSupply.Domain.MittoSms\SuitSupply.Domain.MittoSms.csproj">
+      <Project>{9dde66ce-f28f-4330-950c-ea8e0c899c58}</Project>
+      <Name>SuitSupply.Domain.MittoSms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\SuitSupply.Domain.Product\SuitSupply.Domain.Product.csproj">
       <Project>{8e999608-584d-469f-9cc0-77fbc8557235}</Project>
       <Name>SuitSupply.Domain.Product</Name>

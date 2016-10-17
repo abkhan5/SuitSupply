@@ -40,29 +40,39 @@ namespace SuitSupply.Domain.Product.Handlers
         public void Handle(AddProductCommand command)
         {
             var product = command.ProductDetails;
-
             _dataAccess.Value.AddEntity(product);
             _dataAccess.Value.Save();
         }
 
         public void Handle(ICommand command)
         {
+
+            _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);
+
             var commandResult = new Event
             {
-                CommandId = command.Id.ToString(),
+                CommandId = command.ID.ToString(),
                 Payload = command.GetType().Name,
                 WasCommandSuccessfull = true
             };
             try
             {
                 if (command.GetType() == typeof(AddProductCommand))
+                {
                     Handle(command as AddProductCommand);
+                }
                 else if (command.GetType() == typeof(AddProductsCommand))
+                {
                     Handle(command as AddProductsCommand);
+                }
                 else if (command.GetType() == typeof(UpdateProductsCommand))
+                {
                     Handle(command as UpdateProductsCommand);
+                }
                 else if (command.GetType() == typeof(UpdateProductCommand))
+                {
                     Handle(command as UpdateProductCommand);
+                }
             }
             catch (Exception ex)
             {
@@ -72,7 +82,6 @@ namespace SuitSupply.Domain.Product.Handlers
             finally
             {
                 _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);
-
                 _eventContextDal.Value.AddEntity(commandResult);
                 _eventContextDal.Value.Save();
             }

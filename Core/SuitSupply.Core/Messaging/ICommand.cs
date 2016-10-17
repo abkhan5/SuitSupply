@@ -11,6 +11,8 @@ namespace SuitSupply.Core.Messaging
         /// <summary>
         ///     Gets the command identifier.
         /// </summary>
-        Guid Id { get; }
+        Guid ID { get; set; }
+        
+
     }
 }
