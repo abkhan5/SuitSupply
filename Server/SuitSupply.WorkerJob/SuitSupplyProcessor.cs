@@ -45,13 +45,13 @@ namespace SuitSupply.WorkerJob
                 handlerRegistery.Registery(prodHandler);
 
             var subscriber = new SubscriptionReceiver(
-                AzureConstants.Topic, AzureConstants.AddProductSub,
+                AzureConstants.Topic, AzureConstants.AddProductSubscriber,
                 AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
                 AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
                 AzureConstants.ServicePath, handlerRegistery);
             container.RegisterInstance(subscriber);
-            //container.RegisterType<IMessageReceiver, SubscriptionReceiver>("AddProductSub");
-            //var sub=container.Resolve<IMessageReceiver>("AddProductSub");
+            //container.RegisterType<IMessageReceiver, SubscriptionReceiver>("AddProductSubscriber");
+            //var sub=container.Resolve<IMessageReceiver>("AddProductSubscriber");
         }
 
         public void Start()

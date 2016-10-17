@@ -21,7 +21,7 @@ namespace SuitSupply.Domain.Product.ReadModel.Implementation
 
         public IEnumerable<Entities.Product> GetProducts()
         {
-            var products = ProductQuery();
+            var products = ProductQuery().ToList();
             return products;
         }
 

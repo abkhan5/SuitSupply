@@ -8,6 +8,7 @@ namespace SuitSupply.ConsoleClient
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine("Service is "+SuitSupplyClient.ServicePath);
             var runMoreCommand = true;
             while (runMoreCommand)
             {

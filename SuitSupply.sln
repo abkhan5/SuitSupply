@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.DataContracts", 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SuitSupply.ClientCommon", "Client\SuitSupply.ClientCommon\SuitSupply.ClientCommon.shproj", "{FD55F30D-F36F-4704-818E-245967D5BA1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuitSupply.Domain.MittoSms", "Domain\SuitSupply.Domain.MittoSms\SuitSupply.Domain.MittoSms.csproj", "{9DDE66CE-F28F-4330-950C-EA8E0C899C58}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Client\SuitSupply.ClientCommon\SuitSupply.ClientCommon.projitems*{fd55f30d-f36f-4704-818e-245967d5ba1d}*SharedItemsImports = 13
@@ -278,6 +280,22 @@ Global
 		{36B4A66E-C339-49A7-B0C8-407879838451}.Release|x64.Build.0 = Release|Any CPU
 		{36B4A66E-C339-49A7-B0C8-407879838451}.Release|x86.ActiveCfg = Release|Any CPU
 		{36B4A66E-C339-49A7-B0C8-407879838451}.Release|x86.Build.0 = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|x64.Build.0 = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Debug|x86.Build.0 = Debug|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|ARM.Build.0 = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|x64.ActiveCfg = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|x64.Build.0 = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|x86.ActiveCfg = Release|Any CPU
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -296,5 +314,6 @@ Global
 		{558090A9-F600-47FE-820E-6587631F960D} = {F5639547-BB78-4375-949D-8BE8667CE791}
 		{36B4A66E-C339-49A7-B0C8-407879838451} = {CED280AE-9213-4FDA-BBCF-1E89E6E23BC5}
 		{FD55F30D-F36F-4704-818E-245967D5BA1D} = {F5639547-BB78-4375-949D-8BE8667CE791}
+		{9DDE66CE-F28F-4330-950C-EA8E0C899C58} = {CED280AE-9213-4FDA-BBCF-1E89E6E23BC5}
 	EndGlobalSection
 EndGlobal

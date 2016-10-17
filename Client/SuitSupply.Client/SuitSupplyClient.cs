@@ -14,8 +14,10 @@ namespace SuitSupply.ClientCommon
     
    public class SuitSupplyClient
     {
-        private const string ServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
-        private const string AzureServicePath = "http://suitsupplywebapi.azurewebsites.net/";
+        private const string LocalServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
+        private const string AzureServicePath = "http://appversewebapi.azurewebsites.net/";
+
+        public const string ServicePath = AzureServicePath;
 
         private HttpClient _client;
 
@@ -26,7 +28,7 @@ namespace SuitSupply.ClientCommon
 
         private void InitializeClient()
         {
-            _client = new HttpClient { BaseAddress = new Uri(AzureServicePath) };
+            _client = new HttpClient { BaseAddress = new Uri(ServicePath) };
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
