@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="Command\AddNumberCommand.cs" />
     <Compile Include="Database\MittoDatabase.cs" />
-    <Compile Include="Entities\MittoMessage.cs" />
+    <Compile Include="Database\TableNames.cs" />
     <Compile Include="Handlers\SmsCommandHandler.cs" />
     <Compile Include="MittoSmsDomain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +88,10 @@
     <ProjectReference Include="..\..\Core\SuitSupply.Core\SuitSupply.Core.csproj">
       <Project>{e8fe7e2c-24b0-4be1-822a-ee4a5af3e7a5}</Project>
       <Name>SuitSupply.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuitSupply.DataContracts\SuitSupply.DataContracts.csproj">
+      <Project>{36b4a66e-c339-49a7-b0c8-407879838451}</Project>
+      <Name>SuitSupply.DataContracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

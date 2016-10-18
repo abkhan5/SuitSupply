@@ -2,6 +2,7 @@
 
 using System.Data.Entity;
 using SuitSupply.Core.DataAccess;
+using SuitSupply.DataContracts;
 
 #endregion
 namespace SuitSupply.Domain.MittoSms.Database
@@ -16,6 +17,16 @@ namespace SuitSupply.Domain.MittoSms.Database
         protected override void OnModelCreation(DbModelBuilder modelBuilder)
         {
             modelBuilder.RegisterEntityType(typeof(Event));
+
+            modelBuilder.RegisterEntityType(typeof(MessagingTransactions));
+            modelBuilder.Entity<MessagingTransactions>().ToTable(TableNames.MessagingTransactions);
+            modelBuilder.RegisterEntityType(typeof(ShortMessageService));
+
+            modelBuilder.Entity<ShortMessageService>().ToTable(TableNames.ShortMessageService);
+
+            modelBuilder.RegisterEntityType(typeof(Country));
+            modelBuilder.Entity<Country>().ToTable(TableNames.Country);
+
         }
     }
 }

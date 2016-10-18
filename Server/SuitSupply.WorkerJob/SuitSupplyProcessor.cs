@@ -43,12 +43,7 @@ namespace SuitSupply.WorkerJob
             var prodHandlers = container.ResolveAll<ICommandHandler>();
             foreach (var prodHandler in prodHandlers)
                 handlerRegistery.Registery(prodHandler);
-
-            //var productSubscriber = new SubscriptionReceiver(
-            //    AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddProduct,
-            //    AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
-            //    AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
-            //    AzureConstants.ServicePath, handlerRegistery);
+            
             container.
                 RegisterType<IMessageReceiver,SubscriptionReceiver>("ProductSubs",
                 new ContainerControlledLifetimeManager(),
@@ -57,13 +52,13 @@ namespace SuitSupply.WorkerJob
                 AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
                 AzureConstants.ServicePath, handlerRegistery));
 
-            container.
-                RegisterType<IMessageReceiver, SubscriptionReceiver>("SmsSubs",
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddNumber,
-                AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
-                AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
-                AzureConstants.ServicePath, handlerRegistery));
+            //container.
+            //    RegisterType<IMessageReceiver, SubscriptionReceiver>("SmsSubs",
+            //    new ContainerControlledLifetimeManager(),
+            //    new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddNumber,
+            //    AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
+            //    AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
+            //    AzureConstants.ServicePath, handlerRegistery));
         }
 
         public void Start()
