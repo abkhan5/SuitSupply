@@ -6,6 +6,10 @@ namespace SuitSupply.WorkerJob
     {
         private static void Main(string[] args)
         {
+            
+            Console.WriteLine("Starting Worker job");
+            try 
+            {
             using (var processor = new SuitSupplyProcessor())
             {
                 processor.Start();
@@ -16,6 +20,13 @@ namespace SuitSupply.WorkerJob
 
                 processor.Stop();
             }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+                
+            
         }
     }
 }
