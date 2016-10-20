@@ -18,15 +18,19 @@ namespace SuitSupply.Domain.MittoSms.Database
         {
             modelBuilder.RegisterEntityType(typeof(Event));
 
-            modelBuilder.RegisterEntityType(typeof(MessagingTransactions));
+           // modelBuilder.RegisterEntityType(typeof(MessagingTransactions));
             modelBuilder.Entity<MessagingTransactions>().ToTable(TableNames.MessagingTransactions);
-            modelBuilder.RegisterEntityType(typeof(ShortMessageService));
 
+           // modelBuilder.RegisterEntityType(typeof(ShortMessageService));
             modelBuilder.Entity<ShortMessageService>().ToTable(TableNames.ShortMessageService);
 
-            modelBuilder.RegisterEntityType(typeof(Country));
+           // modelBuilder.RegisterEntityType(typeof(Country));
             modelBuilder.Entity<Country>().ToTable(TableNames.Country);
 
+
+           // modelBuilder.RegisterEntityType(typeof(MessagePackage));
+            modelBuilder.Entity<MessagePackage>().ToTable(TableNames.MessagePackage);
+            
         }
     }
 }

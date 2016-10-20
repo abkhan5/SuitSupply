@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace SuitSupply.Domain.MittoSms.Database
 {
-   public  class TableNames
+   public static class TableNames
    {
-       public const string MessagingTransactions = "MessagingTransactions";
-
-        public const string Country = "Country";
-
-        public const string ShortMessageService = "ShortMessageService";
-    }
+        public const string MessagingTransactions = "SuitSupply.MessagingTransactions";
+        public const string Country = "SuitSupply.Country";
+        public const string ShortMessageService = "SuitSupply.ShortMessageService";
+        public const string MessagePackage = "SuitSupply.MessagePackage";
+   }
 }

@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Country.cs" />
+    <Compile Include="CountryPackages.cs" />
+    <Compile Include="MessagePackage.cs" />
     <Compile Include="MessageSearchCriteria.cs" />
     <Compile Include="MessagingTransactions.cs" />
     <Compile Include="ProductDto.cs" />

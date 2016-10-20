@@ -9,7 +9,7 @@ namespace SuitSupply.Domain.MittoSms.ReadModel
 {
    public interface IMittoMessageDao
    {
-       IEnumerable<Country> GetCountries();
+       IEnumerable<CountryPackages> GetCountries();
 
 
         IEnumerable<ShortMessageService> GetMessagesInRange(MessageSearchCriteria searchCriteria);

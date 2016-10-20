@@ -11,7 +11,7 @@ using SuitSupply.Domain.MittoSms.ReadModel.Implementation;
 #endregion
 namespace SuitSupply.Domain.MittoSms
 {
-  public   class MittoSmsDomain
+    public class MittoSmsDomain
     {
         public MittoSmsDomain(IUnityContainer container)
         {

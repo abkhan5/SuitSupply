@@ -2,7 +2,7 @@
 
 namespace SuitSupply.DataContracts
 {
-  public  class ShortMessageService
+    public class ShortMessageService
     {
         public int ID { get; set; }
         public string From { get; set; }
