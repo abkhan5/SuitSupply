@@ -34,12 +34,33 @@ namespace SuitSupply.Domain.MittoSms.ReadModel.Implementation
         }
 
 
-        public IEnumerable<ShortMessageService> GetMessagesInRange(MessageSearchCriteria searchCriteria)
+        public IEnumerable<MessagingTransactions> GetMessagesInRange(MessageSearchCriteria searchCriteria)
         {
-            IEnumerable<ShortMessageService> messages = new List<ShortMessageService>();
+            var messages =_context.Query<MessagingTransactions>();
+            var fromDate = searchCriteria.DateTimeFrom;
+            if (fromDate.HasValue)
+            {
+                messages = messages.Where(msgItem => msgItem.SentDateTime >= fromDate);
+            }
+            var tillDate = searchCriteria.DateTimeTo;
+            if (fromDate.HasValue)
+            {
+                messages = messages.Where(msgItem => msgItem.SentDateTime <= tillDate);
+            }
 
-            return messages;
+            var recordsToSkip = searchCriteria.Skip;
+            if (recordsToSkip.HasValue)
+            {
+                messages = messages.OrderBy(msgItem=>msgItem.SentDateTime).Skip(recordsToSkip.Value);
+            }
 
+            var recordsToTake = searchCriteria.Take;
+            if (recordsToTake.HasValue)
+            {
+                messages = messages.Take(recordsToTake.Value);
+            }
+            var searchResult = messages.ToList();
+            return searchResult;
 
         }
     }

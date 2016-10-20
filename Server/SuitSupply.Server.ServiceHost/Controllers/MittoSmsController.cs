@@ -26,9 +26,17 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         [HttpGet]
         public IEnumerable<CountryPackages> GetCountries()
         {
-            var products = _dal.GetCountries().ToList();
-            return products;
+            var countries = _dal.GetCountries().ToList();
+            return countries;
         }
 
+
+
+        [HttpGet]
+        public IEnumerable<MessagingTransactions> GetSentSms(MessageSearchCriteria criteria )
+        {
+            var messages = _dal.GetMessagesInRange(criteria).ToList();
+            return messages;
+        }
     }
 }

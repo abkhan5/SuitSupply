@@ -12,6 +12,6 @@ namespace SuitSupply.Domain.MittoSms.ReadModel
        IEnumerable<CountryPackages> GetCountries();
 
 
-        IEnumerable<ShortMessageService> GetMessagesInRange(MessageSearchCriteria searchCriteria);
+        IEnumerable<MessagingTransactions> GetMessagesInRange(MessageSearchCriteria searchCriteria);
     }
 }
