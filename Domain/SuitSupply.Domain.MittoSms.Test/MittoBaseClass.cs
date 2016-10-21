@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
+using SuitSupply.Core.DataAccess;
 
 namespace SuitSupply.Domain.MittoSms.Test
 {
@@ -15,7 +11,10 @@ namespace SuitSupply.Domain.MittoSms.Test
         {
             var container = new UnityContainer();
             Container = container;
-            Container.RegisterInstance(Container);
+            Container.RegisterInstance(container);
+            container.RegisterType<IEventDal, EventDbContext>
+           (new ContainerControlledLifetimeManager(),
+            new InjectionConstructor(DataAccessConstants.SuitConnectionString));
             Container.Resolve<MittoSmsDomain>();
         }
     }

@@ -1,6 +1,8 @@
 ﻿#region Namespace
 
 using System;
+using Microsoft.Practices.Unity;
+using SuitSupply.Core;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.Product.Command;
@@ -21,14 +23,18 @@ namespace SuitSupply.Domain.Product.Handlers
         private Lazy<IUnitOfWork> _dataAccess;
         private readonly Func<IUnitOfWork> _dataAccessInstanceMethod;
         private readonly Lazy<IUnitOfWork> _eventContextDal;
-
+        private readonly IUnityContainer _container;
         #endregion
 
         #region Constructor
 
-        public ProductHandler(Func<IUnitOfWork> dataAccessInstanceMethod, Func<IUnitOfWork> eventContextDal)
+        public ProductHandler(IUnityContainer container)
         {
-            _dataAccessInstanceMethod = dataAccessInstanceMethod;
+            _container = container;
+            _dataAccessInstanceMethod =() => _container.Resolve<IUnitOfWork>(ProductDomainConstant.ProductDatabase);
+
+            Func<IUnitOfWork> eventContextDal = () => _container.Resolve<IUnitOfWork>(Constants.EventContextName);
+
             _eventContextDal = new Lazy<IUnitOfWork>(eventContextDal);
             _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);
         }

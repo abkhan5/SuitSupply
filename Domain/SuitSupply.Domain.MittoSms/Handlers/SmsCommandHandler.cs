@@ -1,6 +1,7 @@
 ﻿#region Namespace
 
 using System;
+using Microsoft.Practices.Unity;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.MittoSms.Command;
@@ -17,18 +18,24 @@ namespace SuitSupply.Domain.MittoSms.Handlers
         private Lazy<IUnitOfWork> _dataAccess;
         private readonly Func<IUnitOfWork> _dataAccessInstanceMethod;
         private readonly Lazy<IUnitOfWork> _eventContextDal;
-
+        private readonly IUnityContainer _container;
         #endregion
 
-        public SmsCommandHandler(Func<IUnitOfWork> dataAccessInstanceMethod, Func<IUnitOfWork> eventContextDal)
+        #region Constructor
+
+        public SmsCommandHandler(IUnityContainer container)
         {
-            _dataAccessInstanceMethod = dataAccessInstanceMethod;
+            _container = container;
+            _dataAccessInstanceMethod = () => _container.Resolve<IUnitOfWork>(SmsDomainConstants.SmsDomainDatabase);
+            Func<IUnitOfWork> eventContextDal = () => _container.Resolve<IUnitOfWork>(SmsDomainConstants.SmsDomainDatabase);
+
             _eventContextDal = new Lazy<IUnitOfWork>(eventContextDal);
             _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);
         }
+        #endregion
 
 
-       
+
         public void Handle(ICommand command)
         {
             _dataAccess = new Lazy<IUnitOfWork>(_dataAccessInstanceMethod);

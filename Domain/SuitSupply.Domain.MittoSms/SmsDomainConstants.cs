@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SuitSupply.Domain.MittoSms
 {
-   public  class SmsCommandHandlers
+   public  class SmsDomainConstants
    {
        public const string SmsCommandHandler = "SmsCommandHandler";
+       public const string SmsDomainDatabase= "SmsDomainConstants";
    }
 }

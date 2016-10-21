@@ -10,5 +10,6 @@ namespace SuitSupply.Core.DataAccess
 
         void Update<T>(T entity) where T : class;
         void Save();
+        
     }
 }

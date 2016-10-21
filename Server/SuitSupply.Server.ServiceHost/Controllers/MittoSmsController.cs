@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web.Http;
+using Microsoft.Practices.Unity;
 using SuitSupply.Core;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
@@ -21,6 +22,8 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         private readonly IEventDal _eventDal;
         private readonly IMittoMessageDao _dal;
 
+
+        [InjectionConstructor]
         public MittoSmsController(ICommandBus bus, IMittoMessageDao dal, IEventDal eventDal)
         {
             _dal = dal;

@@ -20,15 +20,15 @@ namespace SuitSupply.Server.ServiceHost.Controllers
     public class ProductController : ApiController
     {
         private readonly ICommandBus _bus;
-        private readonly IUnityContainer _container;
         private readonly IProductDao _dal;
         private readonly IEventDal _eventDal;
-        public ProductController(ICommandBus bus, IProductDao dal, IUnityContainer container, IEventDal eventDal)
+
+        [InjectionConstructor]
+        public ProductController(ICommandBus bus, IProductDao dal,  IEventDal eventDal)
         {
             _dal = dal;
             _bus = bus;
-            _container = container;
-            _eventDal = eventDal;
+            _eventDal =  eventDal;
         }
 
         [HttpGet]

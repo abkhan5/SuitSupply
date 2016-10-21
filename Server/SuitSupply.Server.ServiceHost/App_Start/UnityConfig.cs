@@ -17,9 +17,8 @@ namespace SuitSupply.Server.ServiceHost
             var container = new UnityContainer();
             container.RegisterInstance(container);
             container.RegisterType<IEventDal, EventDbContext>
-            (Constants.EventContextName,
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(DataAccessConstants.SuitConnectionString));
+            (new ContainerControlledLifetimeManager(),
+             new InjectionConstructor(DataAccessConstants.SuitConnectionString));
             RegisterDomains(container);
             RegisterBusComponents(container);
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

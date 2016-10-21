@@ -1,6 +1,7 @@
 ﻿#region Namespace
 
 using Microsoft.Practices.Unity;
+using SuitSupply.Core;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.MittoSms.Database;
@@ -22,16 +23,17 @@ namespace SuitSupply.Domain.MittoSms
         private void RegisterDatabase(IUnityContainer container)
         {
             container.RegisterType<IUnitOfWork, MittoDatabase>
-            (new TransientLifetimeManager(),
-                new InjectionConstructor(DataAccessConstants.SuitConnectionString));
+            (SmsDomainConstants.SmsDomainDatabase,
+             new TransientLifetimeManager(),
+             new InjectionConstructor(DataAccessConstants.SuitConnectionString));
 
-            container.RegisterType<IMittoMessageDao, MittoMessageDao>();
+            container.RegisterType<IMittoMessageDao, MittoMessageDao>(SmsDomainConstants.SmsDomainDatabase);
         }
 
         private void RegisterCommand(IUnityContainer container)
         {
             container.RegisterType<ICommandHandler, SmsCommandHandler>
-            (SmsCommandHandlers.SmsCommandHandler);
+            (SmsDomainConstants.SmsCommandHandler);
         }
     }
 }

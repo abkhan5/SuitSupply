@@ -23,17 +23,16 @@ namespace SuitSupply.Domain.Product
         private void RegisterDatabase(IUnityContainer container)
         {
             container.RegisterType<IUnitOfWork, ProductDatabase>
-            (new TransientLifetimeManager(),
+            (ProductDomainConstant.ProductDatabase, new TransientLifetimeManager(),
                 new InjectionConstructor(DataAccessConstants.SuitConnectionString));
 
-            container.RegisterType<IProductDao, ProductDao>();
+            container.RegisterType<IProductDao, ProductDao>(new InjectionConstructor(container.Resolve<IUnitOfWork>(ProductDomainConstant.ProductDatabase)));
         }
 
         private void RegisterCommand(IUnityContainer container)
         {
             container.RegisterType<ICommandHandler, ProductHandler>
-            (ProductDomainConstant.ProductCommandHandler
-            );
+            (ProductDomainConstant.ProductCommandHandler);
         }
     }
 }
