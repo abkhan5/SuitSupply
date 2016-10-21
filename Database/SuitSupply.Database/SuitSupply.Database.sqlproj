@@ -72,12 +72,16 @@
     <Build Include="SuitSupply\Views\Security_Product.sql" />
     <Build Include="SuitSupply\Views\Security_ProductPhoto.sql" />
     <Build Include="SuitSupply\Tables\Event.sql" />
-    <Build Include="SuitSupply\Tables\MessagingTransactions.sql" />
+    <Build Include="SuitSupply\Tables\MessageState.sql" />
     <Build Include="SuitSupply\Tables\ShortMessageService.sql" />
     <Build Include="SuitSupply\Tables\Country.sql" />
     <Build Include="SuitSupply\Tables\MessagePackage.sql" />
+    <Build Include="SuitSupply\Tables\MessageStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SuitSupply.Database.refactorlog" />
   </ItemGroup>
 </Project>

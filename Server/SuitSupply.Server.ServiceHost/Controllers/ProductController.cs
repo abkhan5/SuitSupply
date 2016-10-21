@@ -22,12 +22,13 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         private readonly ICommandBus _bus;
         private readonly IUnityContainer _container;
         private readonly IProductDao _dal;
-
-        public ProductController(ICommandBus bus, IProductDao dal, IUnityContainer container)
+        private readonly IEventDal _eventDal;
+        public ProductController(ICommandBus bus, IProductDao dal, IUnityContainer container, IEventDal eventDal)
         {
             _dal = dal;
             _bus = bus;
             _container = container;
+            _eventDal = eventDal;
         }
 
         [HttpGet]
@@ -54,7 +55,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
             var product = productDto.ProductDtoToPoco();
             var command = new UpdateProductCommand {ProductDto = product};
             _bus.Send(command);
-            var commandResult = WaitUntilAvailable(command.ID.ToString());
+            var commandResult = WaitUntilAvailable(command.ID);
             //if (commandResult)
             //{
             // throw   new Exception("Update failed");
@@ -68,26 +69,13 @@ namespace SuitSupply.Server.ServiceHost.Controllers
             var product = productDto.ProductDtoToPoco();
             var command = new AddProductCommand {ProductDetails = product};
             _bus.Send(command);
-            var commandResult = WaitUntilAvailable(command.ID.ToString());
-            return commandResult ? "Success" : "Failed";
-        }
+            var commandResult = WaitUntilAvailable(command.ID);
+            return commandResult ? "Success" : "Failed";}
 
-        private bool WaitUntilAvailable(string commandId)
+        private bool WaitUntilAvailable(Guid commandId)
         {
-            var deadline = DateTime.Now.AddSeconds(Constants.WaitTimeoutInSeconds);
-            var eventDal = _container.Resolve<IUnitOfWork>(Constants.EventContextName);
-
-            while (DateTime.Now < deadline)
-            {
-                var eventResult = eventDal.Query<Event>().FirstOrDefault(item => item.CommandId == commandId);
-
-                if (eventResult != null)
-                    return eventResult.WasCommandSuccessfull;
-
-                Thread.Sleep(500);
-            }
-
-            return false;
+            var result = _eventDal.WaitUntilAvailable(commandId);
+            return result;
         }
     }
 }

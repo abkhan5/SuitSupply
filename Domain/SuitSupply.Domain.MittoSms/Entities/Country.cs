@@ -1,4 +1,4 @@
-﻿namespace SuitSupply.DataContracts
+﻿namespace SuitSupply.Domain.MittoSms.Entities
 {
     public class Country
     {

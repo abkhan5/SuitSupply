@@ -49,6 +49,7 @@
     <Compile Include="DbContextBase.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventDbContext.cs" />
+    <Compile Include="IEventDal.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

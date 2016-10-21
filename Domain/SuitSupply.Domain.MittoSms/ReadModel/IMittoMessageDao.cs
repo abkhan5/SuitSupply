@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SuitSupply.DataContracts;
 
 namespace SuitSupply.Domain.MittoSms.ReadModel
@@ -12,6 +8,6 @@ namespace SuitSupply.Domain.MittoSms.ReadModel
        IEnumerable<CountryPackages> GetCountries();
 
 
-        IEnumerable<MessagingTransactions> GetMessagesInRange(MessageSearchCriteria searchCriteria);
+        IEnumerable<Message> GetMessagesInRange(MessageSearchCriteria searchCriteria);
     }
 }

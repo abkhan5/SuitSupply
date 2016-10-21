@@ -1,26 +1,46 @@
-﻿using System.Collections.Generic;
+﻿#region Namespace
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Http;
-using Microsoft.Practices.Unity;
+using SuitSupply.Core;
+using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.DataContracts;
+using SuitSupply.Domain.MittoSms.Command;
 using SuitSupply.Domain.MittoSms.ReadModel;
 
+#endregion
 namespace SuitSupply.Server.ServiceHost.Controllers
 {
     public class MittoSmsController : ApiController
     {
         private readonly ICommandBus _bus;
-        private readonly IUnityContainer _container;
+        private readonly IEventDal _eventDal;
         private readonly IMittoMessageDao _dal;
 
-        public MittoSmsController(ICommandBus bus, IMittoMessageDao dal, IUnityContainer container)
+        public MittoSmsController(ICommandBus bus, IMittoMessageDao dal, IEventDal eventDal)
         {
             _dal = dal;
             _bus = bus;
-            _container = container;
+            _eventDal = eventDal;
         }
 
+
+
+        [HttpPost]
+        public MessageStateEnum SendSms(SmsRequest sms)
+        {
+            var countryCode = new string(sms.From.Take(3).ToArray());
+            var country = _dal.GetCountries().First(cnItem => cnItem.CountryCode == countryCode);
+            var message = new AddSmsCommand(sms);
+            message.Message.CountryId = country.CountryID;
+            _bus.Send(message);
+            var result = _eventDal.WaitUntilAvailable(message.ID);
+            return result ? MessageStateEnum.Sent : MessageStateEnum.Failed;
+        }
 
 
         [HttpGet]
@@ -33,10 +53,20 @@ namespace SuitSupply.Server.ServiceHost.Controllers
 
 
         [HttpGet]
-        public IEnumerable<MessagingTransactions> GetSentSms(MessageSearchCriteria criteria )
+        public SentMessageResponse Get(MessageSearchCriteria criteria )
         {
             var messages = _dal.GetMessagesInRange(criteria).ToList();
-            return messages;
+            var response = new SentMessageResponse();// {Messages = messages, TotalMessages = messages.Count};
+            return response;
         }
+
+        [HttpGet]
+        public SentMessageResponse Get(string criteria)
+        {
+          //var messages = _dal.GetMessagesInRange(criteria).ToList();
+            var response = new SentMessageResponse();//{ Messages = messages, TotalMessages = messages.Count };
+            return response;
+        }
+
     }
 }

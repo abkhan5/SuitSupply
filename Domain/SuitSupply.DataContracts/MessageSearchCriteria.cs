@@ -11,5 +11,6 @@ namespace SuitSupply.DataContracts
         public int? Skip { get; set; }
 
         public int? Take { get; set; }
+        public string Mcc { get; set; }
     }
 }

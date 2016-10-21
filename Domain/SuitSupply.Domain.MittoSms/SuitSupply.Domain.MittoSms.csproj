@@ -65,19 +65,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\AddMessageCommand.cs" />
     <Compile Include="Command\AddNumberCommand.cs" />
     <Compile Include="Database\MittoDatabase.cs" />
     <Compile Include="Database\TableNames.cs" />
+    <Compile Include="Entities\Country.cs" />
+    <Compile Include="Entities\MessageState.cs" />
+    <Compile Include="Entities\MessageStatus.cs" />
+    <Compile Include="Entities\ShortMessageService.cs" />
     <Compile Include="Handlers\SmsCommandHandler.cs" />
+    <Compile Include="Entities\MessagePackage.cs" />
     <Compile Include="MittoSmsDomain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadModel\IMittoMessageDao.cs" />
     <Compile Include="ReadModel\Implementation\MittoMessageDao.cs" />
     <Compile Include="SmsCommandHandlers.cs" />
+    <Compile Include="Translator\MessageRequestTranslator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Core\SuitSupply.Core.Azure\SuitSupply.Core.Azure.csproj">
       <Project>{e37a8e95-1511-466f-8a59-27cc6747470b}</Project>

@@ -4,6 +4,8 @@ namespace SuitSupply.DataContracts
 {
   public   class CountryPackages
     {
+        public int CountryID { get; set; }
+
         public string MobileCountryCode { get; set; }
 
         public string CountryCode { get; set; }

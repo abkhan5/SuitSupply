@@ -39,15 +39,14 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Country.cs" />
     <Compile Include="CountryPackages.cs" />
-    <Compile Include="MessagePackage.cs" />
     <Compile Include="MessageSearchCriteria.cs" />
-    <Compile Include="MessagingTransactions.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestStatus.cs" />
-    <Compile Include="ShortMessageService.cs" />
+    <Compile Include="MessageStateEnum.cs" />
+    <Compile Include="SentMessageResponse.cs" />
+    <Compile Include="SmsRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
