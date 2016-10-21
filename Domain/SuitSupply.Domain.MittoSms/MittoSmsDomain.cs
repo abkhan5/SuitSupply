@@ -27,7 +27,7 @@ namespace SuitSupply.Domain.MittoSms
              new TransientLifetimeManager(),
              new InjectionConstructor(DataAccessConstants.SuitConnectionString));
 
-            container.RegisterType<IMittoMessageDao, MittoMessageDao>(SmsDomainConstants.SmsDomainDatabase);
+            container.RegisterType<IMittoMessageDao, MittoMessageDao>(new InjectionConstructor(container.Resolve<IUnitOfWork>(SmsDomainConstants.SmsDomainDatabase)));
         }
 
         private void RegisterCommand(IUnityContainer container)

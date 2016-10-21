@@ -24,8 +24,10 @@ namespace SuitSupply.Domain.MittoSms.Test
             var message = new SmsRequest()
             { From = "049985", To = "888", Text = "Hello"};
             ICommand command = new AddSmsCommand(message);
-            commandHandler.Handle(command);
+         //   commandHandler.Handle(command);
             Assert.IsNotNull(commandHandler);
+
+            IMittoMessageDao dal = Container.Resolve<IMittoMessageDao>();
         }
         [TestMethod]
         public void GetCountryTest()
