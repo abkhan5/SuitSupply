@@ -47,6 +47,8 @@
     <Compile Include="MessageStateEnum.cs" />
     <Compile Include="SentMessageResponse.cs" />
     <Compile Include="SmsRequest.cs" />
+    <Compile Include="Statistic.cs" />
+    <Compile Include="StatisticsResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,8 +11,7 @@
 
         public class AzureSubscribtions
         {
-            public const string AddProduct= "AddProductSubscriber";
-            public const string AddNumber = "AddNumberSubscriber";
+            public const string AddTransaction= "AddTransaction";
 
         }
 

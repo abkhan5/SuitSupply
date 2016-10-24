@@ -11,6 +11,10 @@ namespace SuitSupply.Domain.MittoSms.Command
 {
     public class AddSmsCommand :ICommand
     {
+        public AddSmsCommand()
+        {
+            
+        }
         public AddSmsCommand(SmsRequest message) : this(message.Translate())
         {
             

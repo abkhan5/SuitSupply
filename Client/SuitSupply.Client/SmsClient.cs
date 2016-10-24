@@ -14,8 +14,8 @@ namespace SuitSupply.ConsoleClient
         private const string LocalExpressServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
         private const string LocalServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
         private const string AzureServicePath = "http://appversewebapi.azurewebsites.net/";
-        private const string ControllerPath = "api/MittoSmsController";
-        public const string ServicePath = LocalServicePath;
+        private const string ControllerPath = "api/MittoSms";
+        public const string ServicePath = AzureServicePath;
 
         private HttpClient _client;
 
@@ -56,6 +56,9 @@ namespace SuitSupply.ConsoleClient
         public async Task SendMessage()
         {
             var sms = new SmsRequest();
+            sms.From = "496602289916";
+            sms.To= "496604924771";
+            sms.Text = "this is a sample text to add " + DateTime.Now;
             await CreateSmsAsync(sms);
         }
 
@@ -66,7 +69,16 @@ namespace SuitSupply.ConsoleClient
 
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine(" Sms successfully added");
+                var result = await  response.Content.ReadAsAsync<MessageStateEnum>();
+                if (result == MessageStateEnum.Sent)
+                {
+                    Console.WriteLine(" Sms successfully added");
+                }
+                else
+                {
+                    Console.WriteLine(" Sms add failed");
+                }
+
             }
             else
             {

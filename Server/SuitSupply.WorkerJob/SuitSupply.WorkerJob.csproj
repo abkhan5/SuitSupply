@@ -113,6 +113,10 @@
       <Project>{e8fe7e2c-24b0-4be1-822a-ee4a5af3e7a5}</Project>
       <Name>SuitSupply.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Domain\SuitSupply.Domain.MittoSms\SuitSupply.Domain.MittoSms.csproj">
+      <Project>{9dde66ce-f28f-4330-950c-ea8e0c899c58}</Project>
+      <Name>SuitSupply.Domain.MittoSms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Domain\SuitSupply.Domain.Product\SuitSupply.Domain.Product.csproj">
       <Project>{8e999608-584d-469f-9cc0-77fbc8557235}</Project>
       <Name>SuitSupply.Domain.Product</Name>

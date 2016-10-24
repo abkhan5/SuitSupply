@@ -4,6 +4,7 @@ using SuitSupply.Core;
 using SuitSupply.Core.Azure;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
+using SuitSupply.Domain.MittoSms;
 using SuitSupply.Domain.Product;
 
 namespace SuitSupply.WorkerJob
@@ -33,6 +34,8 @@ namespace SuitSupply.WorkerJob
         private void RegisterDomain(IUnityContainer container)
         {
             container.Resolve<ProductDomain>();
+            container.Resolve<MittoSmsDomain>();
+
         }
 
         private void RegisterAzureComponent(IUnityContainer container)
@@ -47,7 +50,7 @@ namespace SuitSupply.WorkerJob
             container.
                 RegisterType<IMessageReceiver,SubscriptionReceiver>("ProductSubs",
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddProduct,
+                new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddTransaction,
                 AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
                 AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
                 AzureConstants.ServicePath, handlerRegistery));

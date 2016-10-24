@@ -1,10 +1,12 @@
 ﻿#region Namespace
 
 using System;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.Domain.MittoSms.Command;
+using SuitSupply.Domain.MittoSms.Entities;
 
 #endregion
 namespace SuitSupply.Domain.MittoSms.Handlers
@@ -75,6 +77,10 @@ namespace SuitSupply.Domain.MittoSms.Handlers
         public void Handle(AddSmsCommand command)
         {
             var message = command.Message;
+            var countryCode = new string(message.From.Take(2).ToArray());
+            var countries = _dataAccess.Value.Query<Country>().ToList();
+            var country = countries.FirstOrDefault(cnItem => cnItem.CountryCode == countryCode);
+            message.CountryId = country.ID;
             _dataAccess.Value.AddEntity(message);
             _dataAccess.Value.Save();
         }

@@ -27,6 +27,7 @@ namespace SuitSupply.Core.Azure
             // Register this handler for each of he handled types.
             foreach (var commandType in supportedCommandTypes)
             {
+                Console.WriteLine("Registering "+ commandType.Name+" to directory");
                 _commandHandlers.Add(commandType.Name, commandHandler);
             }
         }

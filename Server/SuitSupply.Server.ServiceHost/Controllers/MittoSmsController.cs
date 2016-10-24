@@ -3,10 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Web.Http;
 using Microsoft.Practices.Unity;
-using SuitSupply.Core;
 using SuitSupply.Core.DataAccess;
 using SuitSupply.Core.Messaging;
 using SuitSupply.DataContracts;
@@ -36,10 +34,7 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         [HttpPost]
         public MessageStateEnum SendSms(SmsRequest sms)
         {
-            var countryCode = new string(sms.From.Take(3).ToArray());
-            var country = _dal.GetCountries().First(cnItem => cnItem.CountryCode == countryCode);
             var message = new AddSmsCommand(sms);
-            message.Message.CountryId = country.CountryID;
             _bus.Send(message);
             var result = _eventDal.WaitUntilAvailable(message.ID);
             return result ? MessageStateEnum.Sent : MessageStateEnum.Failed;
@@ -54,20 +49,46 @@ namespace SuitSupply.Server.ServiceHost.Controllers
         }
 
 
-
+        
         [HttpGet]
-        public SentMessageResponse Get(MessageSearchCriteria criteria )
+        public SentMessageResponse GetSentSMS(
+            DateTime dateTimeFrom,
+            DateTime dateTimeTo,
+            int skip, 
+            int take)
         {
+            MessageSearchCriteria criteria = new MessageSearchCriteria()
+            {
+                DateTimeFrom = dateTimeFrom,
+                DateTimeTo = dateTimeTo,
+                Skip = skip,
+                Take = take
+            };
             var messages = _dal.GetMessagesInRange(criteria).ToList();
-            var response = new SentMessageResponse();// {Messages = messages, TotalMessages = messages.Count};
+            var response = new SentMessageResponse()
+            {
+                Messages = messages,
+                TotalMessages = messages.Count
+            };
             return response;
         }
-
+        
         [HttpGet]
-        public SentMessageResponse Get(string criteria)
+        public StatisticsResponse GetStatistics(DateTime dateTimeFrom,
+            DateTime dateTimeTo,string mcc)
         {
-          //var messages = _dal.GetMessagesInRange(criteria).ToList();
-            var response = new SentMessageResponse();//{ Messages = messages, TotalMessages = messages.Count };
+            MessageSearchCriteria criteria = new MessageSearchCriteria()
+            {
+                DateTimeFrom = dateTimeFrom,
+                DateTimeTo = dateTimeTo,
+                Mcc = mcc
+            };
+            var messages = _dal.GetStatisticsInRange(criteria).ToList();
+            var response = new StatisticsResponse()
+            {
+                Total= messages.Count ,
+                Statistics = messages
+            };
             return response;
         }
 

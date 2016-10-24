@@ -9,5 +9,7 @@ namespace SuitSupply.Domain.MittoSms.ReadModel
 
 
         IEnumerable<Message> GetMessagesInRange(MessageSearchCriteria searchCriteria);
+
+        IEnumerable<Statistic> GetStatisticsInRange(MessageSearchCriteria searchCriteria);
     }
 }
