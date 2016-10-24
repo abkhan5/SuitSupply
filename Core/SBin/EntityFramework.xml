@@ -21903,7 +21903,7 @@
             Create a Command Definition object given a command tree.
             </summary>
             <param name="commandTree"> command tree for the statement </param>
-            <returns> an executable command definition object </returns>
+            <returns>`an executable command definition object </returns>
             <remarks>
             This method simply delegates to the provider's implementation of CreateDbCommandDefinition.
             </remarks>

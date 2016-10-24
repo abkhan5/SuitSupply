@@ -15,7 +15,7 @@ namespace SuitSupply.ClientCommon
    public class SuitSupplyClient
     {
         private const string LocalServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
-        private const string AzureServicePath = "http://appversewebapi.azurewebsites.net/";
+        private const string AzureServicePath = "http://appverseapi.azurewebsites.net/";
 
         public const string ServicePath = AzureServicePath;
 

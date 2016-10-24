@@ -11,10 +11,10 @@ namespace SuitSupply.ConsoleClient
 {
     public  class SmsClient
     {
-
+        private const string LocalExpressServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
         private const string LocalServicePath = "http://localhost/SuitSupply.Server.ServiceHost/";
         private const string AzureServicePath = "http://appversewebapi.azurewebsites.net/";
-        private const string ControllerPath = "api/product";
+        private const string ControllerPath = "api/MittoSmsController";
         public const string ServicePath = LocalServicePath;
 
         private HttpClient _client;
@@ -56,10 +56,10 @@ namespace SuitSupply.ConsoleClient
         public async Task SendMessage()
         {
             var sms = new SmsRequest();
-            await CreateProductAsync(sms);
+            await CreateSmsAsync(sms);
         }
 
-        private async Task<Uri> CreateProductAsync(SmsRequest sms)
+        private async Task<Uri> CreateSmsAsync(SmsRequest sms)
         {
             var response = await _client.PostAsJsonAsync(ControllerPath, sms);
             response.EnsureSuccessStatusCode();

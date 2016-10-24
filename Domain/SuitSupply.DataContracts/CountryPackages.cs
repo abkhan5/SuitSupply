@@ -16,5 +16,13 @@ namespace SuitSupply.DataContracts
 
         public string PackageName { get; set; }
 
+        public override string ToString()
+        {
+            return "MobileCountryCode=" + MobileCountryCode +
+                   " CountryCode=" + CountryCode +
+                   " CountryName=" + CountryName +
+                   " PricePerSms=" + PricePerSms+
+                   " PackageName" + PackageName;
+        }
     }
 }

@@ -51,14 +51,6 @@ namespace SuitSupply.WorkerJob
                 AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
                 AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
                 AzureConstants.ServicePath, handlerRegistery));
-
-            //container.
-            //    RegisterType<IMessageReceiver, SubscriptionReceiver>("SmsSubs",
-            //    new ContainerControlledLifetimeManager(),
-            //    new InjectionConstructor(AzureConstants.SuitTopic, AzureConstants.AzureSubscribtions.AddNumber,
-            //    AzureConstants.TokenIssuer, AzureConstants.TokenAccessKey,
-            //    AzureConstants.ServiceUriScheme, AzureConstants.ServiceNamespace,
-            //    AzureConstants.ServicePath, handlerRegistery));
         }
 
         public void Start()
